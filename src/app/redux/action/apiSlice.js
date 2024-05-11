@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { fetchBaseQuery, createApi }  from '@reduxjs/toolkit/query/react'
 import { env } from '@/environments/environment'
-import { setCredentials, logOut } from '../redux/action/auth/auth.reducer'
+import { setCredentials, logOut } from '../../auth/auth.reducer'
 
 const baseQuery = fetchBaseQuery({
     baseUrl: env.api_url,
@@ -24,7 +25,7 @@ const baseQueryReauth = async ( args, api, extraOptions) => {
             const user = api.getState().auth.user;
 
             //store new token
-            api.dispatch(setCredentials({...refreshResult.data, user}));
+            api.dispatch(setCredentials({token: refreshResult.data, user: user}));
             result = await baseQuery(args, api, extraOptions);
 
         }else{
