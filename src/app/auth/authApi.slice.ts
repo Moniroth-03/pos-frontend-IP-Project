@@ -6,7 +6,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         login: builders.mutation({
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             query: (credentials: any) => ({
-                url: '/auth',
+                url: '/login',
                 method: 'POST',
                 body: { ...credentials }
             })
