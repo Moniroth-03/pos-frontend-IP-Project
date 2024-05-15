@@ -1,4 +1,3 @@
-
 import { Route, Routes } from 'react-router-dom'
 import LayoutComponent from './layout/layout.component'
 import './App.css'

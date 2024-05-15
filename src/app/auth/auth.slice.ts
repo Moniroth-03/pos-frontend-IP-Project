@@ -2,11 +2,12 @@ import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../store';
 import env from '@/environments/environment';
 import axios from 'axios';
-import { Tres, Tbody } from './auth.type';
+import { Tres, Tbody, initState } from './auth.type';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getLocalStorage: Tres| any = JSON.parse(localStorage.getItem('user'));
 
-const initialState: { Data:Tres, isLoading: boolean} = {
+const initialState: initState = {
     Data: getLocalStorage || {
         status: false,
         message: null,

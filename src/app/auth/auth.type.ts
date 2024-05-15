@@ -1,3 +1,8 @@
+export type initState = {
+    Data: Tres;
+    isLoading: boolean;
+}
+
 export type Tres = {
     status: boolean;
     message: string | null;
