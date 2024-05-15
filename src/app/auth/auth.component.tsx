@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom"
-import { selectToken } from "./auth.reducer";
+import { selectToken } from "./auth.slice";
 
 
 const Authentication = () => {

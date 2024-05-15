@@ -1,17 +1,16 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setCredentials } from "@/app/auth/auth.reducer";
-import { useLoginMutation } from '@/app/auth/authApi.slice.js'
+import { login } from "@/app/auth/auth.slice";
+import { AppDispatch } from "@/app/store";
 
 const useLogin = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch: AppDispatch = useDispatch();
 
     const [user, setUser] = useState('chhit085@gmail.com')
     const [pwd, setPwd] = useState('123456')
     const [errMsg, setErrMsg] = useState('')
-    const [login, {isLoading}] = useLoginMutation();
     
     useEffect(()=>{
         setErrMsg('');
@@ -19,35 +18,21 @@ const useLogin = () => {
 
     const handleSubmit = async(e: Event) =>{
         e.preventDefault();
-
-        try {
-            const userData = await login({user,pwd}).unwrap();
-            dispatch(setCredentials({...userData}));
-            setUser('');
-            setPwd('');
-            navigate('/dashboard');
-        }catch(err: any){
-            if(!err?.response){
-                setErrMsg('no server response')
-            }else if(err.response?.status === 400){
-                setErrMsg('missing usernaem or password');
-            }else if(err.response?.status === 401){
-                setErrMsg('not authorized')
-            }else{
-                setErrMsg('login failed')
-            }
-        }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        dispatch(login({ email:user, password: pwd })).then( (action: any) =>{
+            localStorage.setItem('user',JSON.stringify(action.payload));
+            navigate('/');
+        })
     } 
 
-    const handleUserInput = (e: Event ) => setUser(e.target?.value )
-    const handlePwdInput = (e: Event ) => setPwd(e.target?.value)
+    const handleUserInput = (e: string) => setUser(e)
+    const handlePwdInput = (e: string ) => setPwd(e)
 
     return {
         handlePwdInput,
         handleUserInput,
         handleSubmit,
-        user, pwd, errMsg, login, isLoading, setErrMsg
-        
+        user, pwd, errMsg
     }
 }
 
