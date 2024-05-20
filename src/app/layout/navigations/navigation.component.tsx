@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 let arr = [
   { name: "Dashboard", path: "/dashboard" },
@@ -11,7 +11,18 @@ const NavigationComponent = () => {
     <div>
       {arr.map((obj) => (
         <div>
-          <Link to={obj.path}>{obj.name}</Link>
+          <NavLink
+            to={obj.path}
+            className={({ isActive, isPending }) =>
+              isPending
+                ? "pending"
+                : isActive
+                ? "bg-gradient-to-r from-green-200 to-blue-300"
+                : ""
+            }
+          >
+            {obj.name}
+          </NavLink>
         </div>
       ))}
     </div>
