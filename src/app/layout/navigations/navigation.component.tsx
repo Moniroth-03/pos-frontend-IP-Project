@@ -1,29 +1,25 @@
 import { NavLink } from "react-router-dom";
-
+import { FaDesktop } from "react-icons/fa6";
 let arr = [
-  { name: "Dashboard", path: "/dashboard" },
+  { name: "Dashboard", path: "/dashboard", icon:<FaDesktop /> },
   { name: "Orders", path: "/orders" },
   { name: "OrdersDetail", path: "/ordersDetail" },
 ];
 
 const NavigationComponent = () => {
   return (
-    <div>
+    <div className="flex flex-col gap-2 w-[150px] h-screen ">
       {arr.map((obj) => (
-        <div>
-          <NavLink
-            to={obj.path}
-            className={({ isActive, isPending }) =>
-              isPending
-                ? "pending"
-                : isActive
-                ? "bg-gradient-to-r from-green-200 to-blue-300"
-                : ""
-            }
-          >
-            {obj.name}
-          </NavLink>
-        </div>
+        <NavLink
+          to={obj.path}
+          className={({ isActive }) =>
+            isActive
+              ? "bg-gradient-to-r from-green-200 to-blue-300 text-white p-2 rounded-md flex gap-3 items-center"
+              : ""
+          }
+        >
+          {obj.icon} {obj.name}
+        </NavLink>
       ))}
     </div>
   );
