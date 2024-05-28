@@ -25,7 +25,7 @@ const useLogin = () => {
                 return;
             }
             localStorage.setItem('user',JSON.stringify(action.payload));
-            navigate('/');
+            navigate('/dashboard');
         })
     } 
 
