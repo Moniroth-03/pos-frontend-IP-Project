@@ -6,6 +6,7 @@ import LoginComponent from "./pages/login/login.component";
 
 function App() {
   return (
+   
     <Routes>
       <Route path="/" element={<Authentication />}>
         <Route path="/" element={<LayoutComponent />}>
