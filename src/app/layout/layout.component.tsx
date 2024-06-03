@@ -1,21 +1,19 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import NavigationComponent from "./navigations/navigation.component";
 import HeaderComponent from "./headers/header.component";
-import { useLayoutEffect } from "react";
 
 const LayoutComponent = () => {
-  const navigate = useNavigate();
-  
-  useLayoutEffect(()=>{
-    navigate('/dashboard');
-  },[]);
 
   return (
-    <>
+    <main>
       <HeaderComponent></HeaderComponent>
-      <NavigationComponent></NavigationComponent>
-      <Outlet></Outlet>
-    </>
+      <div className="flex">
+        <NavigationComponent></NavigationComponent>
+        <div className="flex w-full px-6 py-4 bg-gray-50">
+          <Outlet></Outlet>
+        </div>
+      </div>
+    </main>
   )
 }
 

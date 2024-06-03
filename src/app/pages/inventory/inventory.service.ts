@@ -57,14 +57,14 @@ const inventoryService = createSlice({
         })
 
         //Delete
-        .addCase(UpdateProduct.fulfilled, (state, action: PayloadAction<InventoryMessage>)=>{
+        .addCase(DeleteProduct.fulfilled, (state, action: PayloadAction<InventoryMessage>)=>{
             state.isLoading = false;
             state.message = action.payload.message;
         })
-        .addCase(UpdateProduct.pending, (state)=>{
+        .addCase(DeleteProduct.pending, (state)=>{
             state.isLoading = true;
         })
-        .addCase(UpdateProduct.rejected, (state, action )=>{
+        .addCase(DeleteProduct.rejected, (state, action )=>{
             state.isLoading = false;
             state.message = action.payload as string;
         })
