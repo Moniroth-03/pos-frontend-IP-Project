@@ -13,7 +13,7 @@ const initialState: initState = {
     }
 }
 
-const orderSlice = createSlice({
+const orderService = createSlice({
     name:"order",
     initialState,
     reducers:{},
@@ -22,7 +22,7 @@ const orderSlice = createSlice({
     }
 });
 
-export default orderSlice.reducer;
+export default orderService.reducer;
 
 export const selectProduct = ( state: RootState) => state.order.products;
 export const selectCategory = ( state: RootState ) => state.order.categories;
