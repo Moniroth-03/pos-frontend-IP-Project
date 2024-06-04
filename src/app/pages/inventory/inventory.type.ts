@@ -13,10 +13,13 @@ export type InventoryCreateReq = {
 }
 
 export type InventoryUpdateReq = {
-    code: string;
-    type_id: number;
-    unit_price: number;
-    name: string;
+    id: number;
+    body: {   
+        code: string;
+        type_id: number;
+        unit_price: number;
+        name: string;
+    }
 }
 
 export type InventoryMessage = {
@@ -38,5 +41,5 @@ export type inventory = {
 export type initState = {
     isLoading: boolean;
     message: string | null;
-    inventory: inventory[];
+    data: inventory[];
 }

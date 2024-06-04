@@ -1,75 +1,7 @@
+import axiosPrivate from '@/app/api';
 import env from '@/environments/environment';
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { InventoryCreateReq, InventoryGet, InventoryMessage, InventoryUpdateReq, initState } from './inventory.type';
-import { RootState } from '@/app/store';
-import axios from '@/app/api';
-
-const initialState: initState = {
-    isLoading: false,
-    message: null,
-    inventory: []
-}
-
-const inventoryService = createSlice({
-    name: 'inventory',
-    initialState:initialState,
-    reducers:{},
-    extraReducers: builder => {
-        builder
-        // Get
-        .addCase(getProduct.fulfilled, (state, action: PayloadAction<InventoryGet>)=> {
-            state.isLoading = false;
-            state.inventory = action.payload.data;
-            state.message = action.payload.message;
-        })
-        .addCase(getProduct.pending,(state)=>{
-            state.isLoading = true;
-        })
-        .addCase(getProduct.rejected,(state, action)=>{
-            state.isLoading = false;
-            state.message = action.payload as string;
-        })
-
-        //Create
-        .addCase(CreateProduct.fulfilled, (state, action: PayloadAction<InventoryMessage>)=>{
-            state.isLoading = false;
-            state.message = action.payload.message;
-        })
-        .addCase(CreateProduct.pending, (state)=>{
-            state.isLoading = true;
-        })
-        .addCase(CreateProduct.rejected, (state, action )=>{
-            state.isLoading = false;
-            state.message = action.payload as string;
-        })
-
-        //Update
-        .addCase(UpdateProduct.fulfilled, (state, action: PayloadAction<InventoryMessage>)=>{
-            state.isLoading = false;
-            state.message = action.payload.message;
-        })
-        .addCase(UpdateProduct.pending, (state)=>{
-            state.isLoading = true;
-        })
-        .addCase(UpdateProduct.rejected, (state, action )=>{
-            state.isLoading = false;
-            state.message = action.payload as string;
-        })
-
-        //Delete
-        .addCase(DeleteProduct.fulfilled, (state, action: PayloadAction<InventoryMessage>)=>{
-            state.isLoading = false;
-            state.message = action.payload.message;
-        })
-        .addCase(DeleteProduct.pending, (state)=>{
-            state.isLoading = true;
-        })
-        .addCase(DeleteProduct.rejected, (state, action )=>{
-            state.isLoading = false;
-            state.message = action.payload as string;
-        })
-    }
-})
+import { InventoryCreateReq, InventoryGet, InventoryMessage, InventoryUpdateReq } from './inventory.type';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getProduct = createAsyncThunk<
     InventoryGet,void, { rejectValue: string }
@@ -77,14 +9,17 @@ export const getProduct = createAsyncThunk<
     "inventory/get",
     async (_,thunkAPI)=>{
         try {
-            const res = await axios.get<InventoryGet>(env.api_url+'/product');
+            const res = await axiosPrivate.get<InventoryGet>(env.api_url+'/product');
             return res.data;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
-           if (err.response) {
-                return thunkAPI.rejectWithValue(err.response.data);
+        } catch (error: any) {
+            if (error.response && error.response.data) {
+                return thunkAPI.rejectWithValue(error.response.data);
+            } else if (error.message) {
+                return thunkAPI.rejectWithValue(error.message);
+            } else {
+                return thunkAPI.rejectWithValue('An unknown error occurred');
             }
-            throw err;
         }
     }
 )
@@ -93,16 +28,19 @@ export const UpdateProduct = createAsyncThunk<
     InventoryMessage,InventoryUpdateReq, { rejectValue: string }
 >(
     "inventory/update",
-    async (body,thunkAPI)=>{
+    async (payload,thunkAPI)=>{
         try {
-            const res = await axios.put<InventoryMessage>(env.api_url+'/product',body);
+            const res = await axiosPrivate.put<InventoryMessage>(env.api_url+'/product/'+ payload.id,payload.body);
             return res.data;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
-           if (err.response) {
-                return thunkAPI.rejectWithValue(err.response.data);
+        } catch (error: any) {
+            if (error.response && error.response.data) {
+                return thunkAPI.rejectWithValue(error.response.data);
+            } else if (error.message) {
+                return thunkAPI.rejectWithValue(error.message);
+            } else {
+                return thunkAPI.rejectWithValue('An unknown error occurred');
             }
-            throw err;
         }
     }
 )
@@ -113,39 +51,38 @@ export const CreateProduct = createAsyncThunk<
     "inventory/create",
     async (body,thunkAPI)=>{
         try {
-            const res = await axios.post<InventoryMessage>(env.api_url+'/product',body);
+            const res = await axiosPrivate.post<InventoryMessage>(env.api_url+'/product',body);
             return res.data;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
-           if (err.response) {
-                return thunkAPI.rejectWithValue(err.response.data);
+        } catch (error: any) {
+            if (error.response && error.response.data) {
+                return thunkAPI.rejectWithValue(error.response.data);
+            } else if (error.message) {
+                return thunkAPI.rejectWithValue(error.message);
+            } else {
+                return thunkAPI.rejectWithValue('An unknown error occurred');
             }
-            throw err;
         }
     }
 )
 
 export const DeleteProduct = createAsyncThunk<
-    InventoryMessage,void, { rejectValue: string }
+    InventoryMessage,number, { rejectValue: string }
 >(
     "inventory/delete",
-    async (_,thunkAPI)=>{
+    async (id,thunkAPI)=>{
         try {
-            const res = await axios.delete<InventoryMessage>(env.api_url+'/product');
+            const res = await axiosPrivate.delete<InventoryMessage>(env.api_url+'/product/' + id);
             return res.data;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
-           if (err.response) {
-                return thunkAPI.rejectWithValue(err.response.data);
+        } catch (error: any) {
+            if (error.response && error.response.data) {
+                return thunkAPI.rejectWithValue(error.response.data);
+            } else if (error.message) {
+                return thunkAPI.rejectWithValue(error.message);
+            } else {
+                return thunkAPI.rejectWithValue('An unknown error occurred');
             }
-            throw err;
         }
     }
 )
-
-export default inventoryService.reducer;
-
-export const selectProduct = ( state: RootState) => state.inventory.inventory;
-
-export const selectMessage = ( state: RootState) => state.inventory.message;
-export const selectIsLoading = ( state: RootState ) => state.inventory.isLoading;

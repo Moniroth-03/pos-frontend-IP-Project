@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authSlice from './auth/auth.slice.js'
-import inventoryService from './pages/inventory/inventory.service.ts'
+import inventoryService from './pages/inventory/inventory.slice.ts'
 import orderService from './pages/order/order.service.ts'
 
 

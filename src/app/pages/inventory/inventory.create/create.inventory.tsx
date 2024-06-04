@@ -1,51 +1,52 @@
 import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button";
 import { FaPlus } from "react-icons/fa";
-
+import { IoCloseSharp } from "react-icons/io5";
 
 const CreateInventory = () => {
   return (
-    <Dialog>
-        {/* click to open dialog button that will display in component */}
-        <DialogTrigger asChild>
+    <Sheet>
+        {/* click to open Sheet button that will display in component */}
+        <SheetTrigger asChild>
             <Button variant="outline">
-                <FaPlus className="text-emerald-500"/>
-                <span className="font-medium pl-1 text-emerald-500 text-base">new</span>
+                <FaPlus className="text-emerald-500" size={'0.8rem'}/>
+                <span className="font-medium pl-1 text-emerald-500 text-sm">New</span>
             </Button>
-        </DialogTrigger>
+        </SheetTrigger>
 
-        <DialogContent className="h-full w-fit px-4">
-            <DialogHeader>
-                <DialogTitle className="w-4/5 truncate">Create Items</DialogTitle>
+        <SheetContent className="h-full pt-4 px-4">
+            <SheetHeader>
+                <SheetTitle className="w-4/5 truncate mb-6">Create Items</SheetTitle>
 
 
                 
-                {/* dialog content */}
-                <DialogDescription>
+                {/* Sheet content */}
+                <SheetDescription>
                     This action cannot be undone. This will permanently delete your account
                     and remove your data from our servers.
-                </DialogDescription>
+                </SheetDescription>
 
 
 
 
-            </DialogHeader>
+            </SheetHeader>
 
-            <DialogClose asChild className="w-fit absolute top-3 right-3 z-10">
+            <SheetClose asChild className="w-fit absolute top-3 right-3 z-10">
                 <Button type="button" variant="outline">
-                Close
+                  <IoCloseSharp className="text-emerald-500"/>
+                  <span className="text-emerald-500 font-medium text-sm">Close</span>
                 </Button>
-          </DialogClose>
-        </DialogContent>
-    </Dialog>
+          </SheetClose>
+        </SheetContent>
+    </Sheet>
   )
 }
 

@@ -15,7 +15,7 @@ type props = {
   setOpen: any;
 }
 
-const ViewInventory = ({open,setOpen}:props) => {
+const DeleteInventory = ({open,setOpen}:props) => {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
 
@@ -47,4 +47,4 @@ const ViewInventory = ({open,setOpen}:props) => {
   )
 }
 
-export default ViewInventory
+export default DeleteInventory
