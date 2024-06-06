@@ -10,7 +10,7 @@ const LayoutComponent = () => {
       <HeaderComponent></HeaderComponent>
       <div className="flex">
         <NavigationComponent></NavigationComponent>
-        <div className="flex w-full px-6 py-4 bg-gray-50">
+        <div className="flex w-full px-6 py-4">
 
           <Outlet></Outlet>
         

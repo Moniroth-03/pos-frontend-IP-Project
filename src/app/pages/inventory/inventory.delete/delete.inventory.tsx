@@ -1,49 +1,50 @@
 import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet"
-import { Button } from "@/components/ui/button";
-import { IoCloseSharp } from "react-icons/io5";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+import { useDispatch } from "react-redux";
+import { DeleteProduct } from "../inventory.service";
+import { inventory } from "../inventory.type";
+import { AppDispatch } from "@/app/store";
 
 type props = {
   open: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setOpen: any;
+  data: inventory | null;
 }
 
-const DeleteInventory = ({open,setOpen}:props) => {
+const DeleteInventory = ({open,setOpen,data}:props) => {
+
+  const dispatch:AppDispatch = useDispatch();
+
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogContent>
 
-        <SheetContent className="h-full pt-4 px-4">
-            <SheetHeader>
-                <SheetTitle className="w-4/5 truncate mb-6">Product name</SheetTitle>
+        <AlertDialogHeader>
+          <div className="flex gap-2">
+            <div>
+              <AlertDialogTitle>Delete item <span className="text-red-600">{ data?.name }</span></AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently remove this item. Are you Sure?
+              </AlertDialogDescription>
+            </div>
+          </div>
+        </AlertDialogHeader>
 
-
-                
-                {/* Sheet content */}
-                <SheetDescription>
-                    This action cannot be undone. This will permanently delete your account
-                    and remove your data from our servers.
-                </SheetDescription>
-
-
-
-
-            </SheetHeader>
-
-            <SheetClose asChild className="w-fit absolute top-3 right-3 z-10">
-                <Button type="button" variant="outline">
-                  <IoCloseSharp className="text-emerald-500"/>
-                  <span className="text-emerald-500 font-medium text-sm">Close</span>
-                </Button>
-          </SheetClose>
-        </SheetContent>
-    </Sheet>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction className="bg-red-500 hover:bg-red-600" onClick={()=>dispatch(DeleteProduct(data.id))}>Continue</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }
 

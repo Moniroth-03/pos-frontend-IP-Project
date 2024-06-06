@@ -8,20 +8,22 @@ import {
 } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button";
 import { IoCloseSharp } from "react-icons/io5";
+import { inventory } from "../inventory.type";
 
 type props = {
   open: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setOpen: any;
+  data: inventory | null;
 }
 
-const UpdateInventory = ({open,setOpen}:props) => {
+const UpdateInventory = ({open,setOpen,data}:props) => {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
 
-        <SheetContent className="h-full pt-4 px-4">
+        <SheetContent className="h-full pt-4 px-4 sm:max-w-[600px]">
             <SheetHeader>
-                <SheetTitle className="w-4/5 truncate mb-6">Product name</SheetTitle>
+                <SheetTitle className="w-4/5 truncate mb-6">{data?.name}</SheetTitle>
 
 
                 

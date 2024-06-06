@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Sheet,
   SheetClose,
@@ -8,29 +9,63 @@ import {
 } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button";
 import { IoCloseSharp } from "react-icons/io5";
+import { inventory } from "../inventory.type";
+import { randomInt } from "crypto";
 
 type props = {
   open: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setOpen: any;
+  data: inventory | null;
 }
 
-const ViewInventory = ({open,setOpen}:props) => {
+const ViewInventory = ({open,setOpen,data}:props) => {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
 
-        <SheetContent className="h-full pt-4 px-4">
-            <SheetHeader>
-                <SheetTitle className="w-4/5 truncate mb-6">Product name</SheetTitle>
+        <SheetContent className="h-full sm:max-w-[600px] pt-4 px-4">
+            <SheetHeader className="w-full">
+                <SheetTitle className="w-4/5 truncate mb-6">Item details</SheetTitle>
 
 
-                
                 {/* Sheet content */}
-                <SheetDescription>
-                    This action cannot be undone. This will permanently delete your account
-                    and remove your data from our servers.
-                </SheetDescription>
+                <SheetDescription className="flex grow flex-col gap-3">
 
+                    <img className="flex object-contain max-h-36 mb-2 aspect-square brightness-105" src="https://m.media-amazon.com/images/I/51G22XSlZDL._AC_UF894,1000_QL80_.jpg" alt="no img"/>
+
+                    <strong className="border-b text-slate-900 border-b-gray-300 py-2 text-center w-full">Product detail</strong>
+                    <section className="grid grid-cols-2 px-2"> 
+                      <div className="text-start text-slate-900 font-medium flex flex-col gap-4">
+                        <span className="text-sm"> Product name: </span>
+                        <span className="text-sm">Code:</span>
+                        <span className="text-sm">Category:</span>
+                        <span className="text-sm">In stock:</span>
+                        <span className="text-sm">Price:</span>
+                      </div>
+                      <div className="text-end flex flex-col gap-4 text-gray-500">
+                        <span className="text-sm">{data?.name}</span>
+                        <span className="text-sm">{data?.code}</span>
+                        <span className="text-sm">{data?.name}</span>
+                        <span className="text-sm">{(Math.random()*100).toFixed(0)}</span>
+                        <span className="text-sm">{data?.unit_price}</span>
+                      </div>
+                    </section>
+
+
+                    <strong className="border-b border-b-gray-300 text-slate-900 py-2 text-center w-full">Product activity</strong>
+                    <section className="grid grid-cols-2 px-2"> 
+                      <div className="text-start text-slate-900 font-medium flex flex-col gap-4">
+                        <span className="text-sm"> Product added date: </span>
+                        <span className="text-sm">Product recent update date:</span>
+                        <span className="text-sm">Supplier:</span>
+                      </div>
+                      <div className="text-end flex flex-col gap-4 text-gray-500">
+                        <span className="text-sm">{data?.created_at.toString()}</span>
+                        <span className="text-sm">{data?.updated_at.toString()}</span>
+                        <span className="text-sm">{data?.name}</span>
+                      </div>
+                    </section>
+                </SheetDescription>
 
 
 
