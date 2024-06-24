@@ -20,7 +20,12 @@ const useLogin = () => {
         e.preventDefault();
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         dispatch(login({ email:user, password: pwd })).then( (action: any) =>{
+            if(action.payload === undefined || null){
+                setErrMsg('server not found');
+                return;
+            }
             localStorage.setItem('user',JSON.stringify(action.payload));
+            localStorage.setItem('token',JSON.stringify(action.payload.token));
             navigate('/');
         })
     } 

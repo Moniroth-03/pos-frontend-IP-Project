@@ -3,24 +3,28 @@ import LayoutComponent from "./layout/layout.component";
 import "./App.css";
 import Authentication from "./auth/auth.component";
 import LoginComponent from "./pages/login/login.component";
+import InventoryComponent from "./pages/inventory/inventory.component";
+import Order from "./pages/order/order.component";
+import NotFound from "./pages/notfound/notfound.component";
 
 function App() {
   return (
+   
     <Routes>
       <Route path="/" element={<Authentication />}>
         <Route path="/" element={<LayoutComponent />}>
-          <Route path="/dashboard" element={<div>Dashboard</div>} />
+          <Route index path="" element={<div>Dashboard</div>} />
 
-          <Route path="/orders" element={<div>Orders</div>} />
-          <Route path="/ordersdetail" element={<div>Orders Detail</div>} />
-          <Route path="/inventory" element={<div>Inventory</div>} />
           <Route path="/customer" element={<div>Customer</div>} />
           <Route path="/user" element={<div>User</div>} />
+          <Route path="orders" element={<Order/>} />
+          <Route path="ordersdetail" element={<div>Orders Detail</div>} />
+          <Route path="inventory" element={<InventoryComponent />} />
 
-          <Route path="*" element={<div>notfound</div>} />
         </Route>
       </Route>
-
+        
+      <Route path="*" element={<NotFound/>} />
       <Route path="/login" element={<LoginComponent />} />
     </Routes>
   );

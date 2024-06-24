@@ -1,39 +1,25 @@
 import { Outlet } from "react-router-dom";
 import NavigationComponent from "./navigations/navigation.component";
 import HeaderComponent from "./headers/header.component";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
+import { Toaster } from "sonner";
 
 const LayoutComponent = () => {
+
   return (
-    <>
+    <main className="h-screen overflow-hidden relative">
       <HeaderComponent></HeaderComponent>
-      <NavigationComponent></NavigationComponent>
-      <Outlet></Outlet>
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationLink href="#">1</PaginationLink>
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext href="#" />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-    </>
+      <div className="flex">
+        <NavigationComponent></NavigationComponent>
+        <div className="flex w-full px-6 py-4">
+
+          <Outlet></Outlet>
+        
+        </div>
+      </div>
+
+      {/* this is for alert */}
+      <Toaster richColors/>
+    </main>
   )
 }
 
