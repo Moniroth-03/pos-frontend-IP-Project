@@ -22,23 +22,8 @@ import { FaPlus } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import { useForm } from "react-hook-form"
 import {z} from 'zod';
+import formSchema from "./formschema";
 
-
-const formSchema = z.object({
-  name: z.string().max(100, { message: "name cannot exceed 100 characters" })
-                  .refine(val => val.trim() !== '', { message: 'name cannot be empty' }),
-  code: z.string().max(10, { message: "code cannot exceed 10 characters" })
-                  .refine(val => val.trim() !== '', { message: 'code cannot be empty' }),
-  type_id: z.preprocess(val => Number(val), z.number()),
-  in_stock: z.preprocess(val => Number(val), z.number()
-            .nonnegative({ message: 'In Stock must be a non-negative number' }))
-            .optional(),
-  unit_price: z.preprocess(val => Number(val), z.number()
-            .nonnegative({ message: 'price must be a non-negative number' }))
-            .optional()
-            .refine(val => val !== 0, { message: 'price cannot be 0' }),
-  // supplier: z.string().max(100, { message: "name cannot exceed 100 characters" }),
-})
 
 const CreateInventory = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -56,6 +41,7 @@ const CreateInventory = () => {
   const handleSubmitForm = (value: z.infer<typeof formSchema>) =>{
     console.log(value)
   }
+  
   return (
     <Sheet>
         {/* click to open Sheet button that will display in component */}

@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { selectInventory } from "./inventory.slice";
 import useInventory from "./inventory.hook";
 import Tablerow from "./inventory.components/tableRow";
+import LoadingSpinner from "@/app/layout/loading/loading";
 
 const InventoryComponent = () => {
 
@@ -26,7 +27,7 @@ const InventoryComponent = () => {
 
     const { isLoading, data } = useSelector(selectInventory);
     return ( 
-        <main className="w-full">
+        <main className="w-full bg-white">
             <section className="flex justify-between w-full">
                 <div className="flex gap-2 items-center">
                     <FaHome size={'1.1rem'}/>
@@ -40,7 +41,7 @@ const InventoryComponent = () => {
 
 
             {/* list inventory product */}
-            {isLoading?<div>loading........</div>:
+            {isLoading?<LoadingSpinner/>:
             
             <section className="mt-4 overflow-y-auto h-[70dvh]">
                 <Table className="bg-white border-2 border-gray-200 drop-shadow-md">
