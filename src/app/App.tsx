@@ -13,7 +13,10 @@ function App() {
           <Route path="/dashboard" element={<div>Dashboard</div>} />
 
           <Route path="/orders" element={<div>Orders</div>} />
-          <Route path="/OrdersDetail" element={<div>Orders Detail</div>} />
+          <Route path="/ordersdetail" element={<div>Orders Detail</div>} />
+          <Route path="/inventory" element={<div>Inventory</div>} />
+          <Route path="/customer" element={<div>Customer</div>} />
+          <Route path="/user" element={<div>User</div>} />
 
           <Route path="*" element={<div>notfound</div>} />
         </Route>
