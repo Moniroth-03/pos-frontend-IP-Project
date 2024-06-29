@@ -1,0 +1,192 @@
+import React from 'react';
+import { FaArrowLeft } from "react-icons/fa6";
+import { useParams } from 'react-router-dom';
+
+
+const purchaseHistoryData = [
+  {
+    orderId: "OID#230220200001",
+    total: "20$",
+    quantity: 2,
+    purchaseDate: "09/08/2024",
+  },
+  {
+    orderId: "OID#230220200001",
+    total: "20$",
+    quantity: 2,
+    purchaseDate: "09/08/2024",
+  },
+  {
+    orderId: "OID#230220200001",
+    total: "20$",
+    quantity: 2,
+    purchaseDate: "09/08/2024",
+  },
+  {
+    orderId: "OID#230220200001",
+    total: "20$",
+    quantity: 2,
+    purchaseDate: "09/08/2024",
+  },
+  {
+    orderId: "OID#230220200001",
+    total: "20$",
+    quantity: 2,
+    purchaseDate: "09/08/2024",
+  },
+  {
+    orderId: "OID#230220200001",
+    total: "20$",
+    quantity: 2,
+    purchaseDate: "09/08/2024",
+  },
+  {
+    orderId: "OID#230220200001",
+    total: "20$",
+    quantity: 2,
+    purchaseDate: "09/08/2024",
+  },
+];
+
+const CustomerDetailComponent: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+
+  const handleBackClick = () => {
+    window.history.back();
+  };
+  return (
+    <div className="container mx-auto px-2 flex flex-col">
+        <div className="flex flex-row justify-between items-center">
+        <div className="flex flex-row items-center gap-4">
+          <button  onClick={handleBackClick} className="font-semibold">
+            <FaArrowLeft></FaArrowLeft>
+          </button>
+          <span className="font-semibold text-sm">Customer</span>
+        </div>
+        <h1 className="font-bold text-xl mb-2">Personal Information</h1>
+        <button><svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_265_1885)">
+<path d="M24 15H17C16.4696 15 15.9609 15.2107 15.5858 15.5858C15.2107 15.9609 15 16.4696 15 17V31C15 31.5304 15.2107 32.0391 15.5858 32.4142C15.9609 32.7893 16.4696 33 17 33H31C31.5304 33 32.0391 32.7893 32.4142 32.4142C32.7893 32.0391 33 31.5304 33 31V24" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M30.375 14.625C30.7728 14.2272 31.3124 14.0037 31.875 14.0037C32.4376 14.0037 32.9772 14.2272 33.375 14.625C33.7728 15.0228 33.9963 15.5624 33.9963 16.125C33.9963 16.6876 33.7728 17.2272 33.375 17.625L24 27L20 28L21 24L30.375 14.625Z" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_265_1885">
+<rect x="4" y="4" width="40" height="40" rx="20" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+</button>
+        </div>
+      <div className="flex flex-col items-center mb-6">
+
+        <div className="w-24 h-24 bg-gray-300 rounded-full mb-2"></div>
+        <h2 className="font-semibold text-lg">Chharng Chhit</h2>
+        <div className="flex flex-row items-center space-x-24">
+          <div className="flex flex-row items-center">
+            <span>
+              <svg
+                width="25"
+                height="24"
+                viewBox="0 0 25 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M17.5 19H7.5V5H17.5M17.5 1H7.5C6.39 1 5.5 1.89 5.5 3V21C5.5 21.5304 5.71071 22.0391 6.08579 22.4142C6.46086 22.7893 6.96957 23 7.5 23H17.5C18.0304 23 18.5391 22.7893 18.9142 22.4142C19.2893 22.0391 19.5 21.5304 19.5 21V3C19.5 2.46957 19.2893 1.96086 18.9142 1.58579C18.5391 1.21071 18.0304 1 17.5 1Z"
+                  fill="#64748B"
+                />
+              </svg>
+            </span>
+
+            <span>098 787 839</span>
+          </div>
+          <div className="flex flex-row items-center">
+            <span>
+              <svg
+                width="25"
+                height="24"
+                viewBox="0 0 25 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4.5 20C3.95 20 3.47933 19.8043 3.088 19.413C2.69667 19.0217 2.50067 18.5507 2.5 18V6C2.5 5.45 2.696 4.97933 3.088 4.588C3.48 4.19667 3.95067 4.00067 4.5 4H20.5C21.05 4 21.521 4.196 21.913 4.588C22.305 4.98 22.5007 5.45067 22.5 6V18C22.5 18.55 22.3043 19.021 21.913 19.413C21.5217 19.805 21.0507 20.0007 20.5 20H4.5ZM12.5 13L4.5 8V18H20.5V8L12.5 13ZM12.5 11L20.5 6H4.5L12.5 11ZM4.5 8V6V18V8Z"
+                  fill="#64748B"
+                />
+              </svg>
+            </span>
+            <span>kongchankiry@kce.edu.kh</span>
+          </div>
+          <div className="flex flex-row items-center">
+            <span>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 22C4.45 22 3.97933 21.8043 3.588 21.413C3.19667 21.0217 3.00067 20.5507 3 20V6C3 5.45 3.196 4.97933 3.588 4.588C3.98 4.19667 4.45067 4.00067 5 4H6V2H8V4H16V2H18V4H19C19.55 4 20.021 4.196 20.413 4.588C20.805 4.98 21.0007 5.45067 21 6V20C21 20.55 20.8043 21.021 20.413 21.413C20.0217 21.805 19.5507 22.0007 19 22H5ZM5 20H19V10H5V20ZM5 8H19V6H5V8ZM12 14C11.7167 14 11.4793 13.904 11.288 13.712C11.0967 13.52 11.0007 13.2827 11 13C10.9993 12.7173 11.0953 12.48 11.288 12.288C11.4807 12.096 11.718 12 12 12C12.282 12 12.5197 12.096 12.713 12.288C12.9063 12.48 13.002 12.7173 13 13C12.998 13.2827 12.902 13.5203 12.712 13.713C12.522 13.9057 12.2847 14.0013 12 14ZM8 14C7.71667 14 7.47933 13.904 7.288 13.712C7.09667 13.52 7.00067 13.2827 7 13C6.99933 12.7173 7.09533 12.48 7.288 12.288C7.48067 12.096 7.718 12 8 12C8.282 12 8.51967 12.096 8.713 12.288C8.90633 12.48 9.002 12.7173 9 13C8.998 13.2827 8.902 13.5203 8.712 13.713C8.522 13.9057 8.28467 14.0013 8 14ZM16 14C15.7167 14 15.4793 13.904 15.288 13.712C15.0967 13.52 15.0007 13.2827 15 13C14.9993 12.7173 15.0953 12.48 15.288 12.288C15.4807 12.096 15.718 12 16 12C16.282 12 16.5197 12.096 16.713 12.288C16.9063 12.48 17.002 12.7173 17 13C16.998 13.2827 16.902 13.5203 16.712 13.713C16.522 13.9057 16.2847 14.0013 16 14ZM12 18C11.7167 18 11.4793 17.904 11.288 17.712C11.0967 17.52 11.0007 17.2827 11 17C10.9993 16.7173 11.0953 16.48 11.288 16.288C11.4807 16.096 11.718 16 12 16C12.282 16 12.5197 16.096 12.713 16.288C12.9063 16.48 13.002 16.7173 13 17C12.998 17.2827 12.902 17.5203 12.712 17.713C12.522 17.9057 12.2847 18.0013 12 18ZM8 18C7.71667 18 7.47933 17.904 7.288 17.712C7.09667 17.52 7.00067 17.2827 7 17C6.99933 16.7173 7.09533 16.48 7.288 16.288C7.48067 16.096 7.718 16 8 16C8.282 16 8.51967 16.096 8.713 16.288C8.90633 16.48 9.002 16.7173 9 17C8.998 17.2827 8.902 17.5203 8.712 17.713C8.522 17.9057 8.28467 18.0013 8 18ZM16 18C15.7167 18 15.4793 17.904 15.288 17.712C15.0967 17.52 15.0007 17.2827 15 17C14.9993 16.7173 15.0953 16.48 15.288 16.288C15.4807 16.096 15.718 16 16 16C16.282 16 16.5197 16.096 16.713 16.288C16.9063 16.48 17.002 16.7173 17 17C16.998 17.2827 16.902 17.5203 16.712 17.713C16.522 17.9057 16.2847 18.0013 16 18Z"
+                  fill="#64748B"
+                />
+              </svg>
+            </span>
+            <span>Jan 14, 2024</span>
+          </div>
+          <div className="flex flex-row items-center">
+            <span>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14 6H6C5.068 6 4.602 6 4.234 6.152C3.99137 6.25262 3.77093 6.40005 3.58528 6.58588C3.39963 6.7717 3.2524 6.99227 3.152 7.235C3 7.602 3 8.068 3 9C3.79565 9 4.55871 9.31607 5.12132 9.87868C5.68393 10.4413 6 11.2044 6 12C6 12.7956 5.68393 13.5587 5.12132 14.1213C4.55871 14.6839 3.79565 15 3 15C3 15.932 3 16.398 3.152 16.765C3.2524 17.0077 3.39963 17.2283 3.58528 17.4141C3.77093 17.5999 3.99137 17.7474 4.234 17.848C4.602 18 5.068 18 6 18H14M14 6H18C18.932 6 19.398 6 19.765 6.152C20.0078 6.25251 20.2284 6.3999 20.4143 6.58572C20.6001 6.77155 20.7475 6.99218 20.848 7.235C21 7.602 21 8.068 21 9C20.2044 9 19.4413 9.31607 18.8787 9.87868C18.3161 10.4413 18 11.2044 18 12C18 12.7956 18.3161 13.5587 18.8787 14.1213C19.4413 14.6839 20.2044 15 21 15C21 15.932 21 16.398 20.848 16.765C20.7475 17.0078 20.6001 17.2284 20.4143 17.4143C20.2284 17.6001 20.0078 17.7475 19.765 17.848C19.398 18 18.932 18 18 18H14M14 6V18"
+                  stroke="#6B7280"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+            <span>200</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="purchase-history">
+        <h2 className="font-semibold mb-1">Purchase History</h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full white border rounded-lg">
+            <thead>
+              <tr>
+                <th className="py-2 px-4 bg-gray-100 text-start">Order ID</th>
+                <th className="py-2  px-2 bg-gray-100 text-end">Total</th>
+                <th className="py-2 px-2 bg-gray-100 text-end">Quantity</th>
+                <th className="py-2 px-4 bg-gray-100 text-end">Purchase Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {purchaseHistoryData.map((item, index) => (
+                <tr key={index} className={`text-start ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
+                  <td className="py-2 px-4">{item.orderId}</td>
+                  
+
+                  <td className="py-2 px-4 text-end">{item.total}</td>
+                  <td className="py-2 px-8 text-end">{item.quantity}</td>
+                  <td className="py-2 px-4 text-end">{item.purchaseDate}</td>
+            
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CustomerDetailComponent;

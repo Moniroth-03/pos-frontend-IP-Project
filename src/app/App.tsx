@@ -3,6 +3,8 @@ import LayoutComponent from "./layout/layout.component";
 import "./App.css";
 import Authentication from "./auth/auth.component";
 import LoginComponent from "./pages/login/login.component";
+import CustomerComponent from "./layout/navigations-components/customers/customer.component";
+import CustomerDetailComponent from "./layout/navigations-components/customers/customerdetail.component";
 
 function App() {
   return (
@@ -15,7 +17,8 @@ function App() {
           <Route path="/orders" element={<div>Orders</div>} />
           <Route path="/ordersdetail" element={<div>Orders Detail</div>} />
           <Route path="/inventory" element={<div>Inventory</div>} />
-          <Route path="/customer" element={<div>Customer</div>} />
+          <Route path="/customer" element={<CustomerComponent/>} />
+          <Route path="/customer/:id" element={<CustomerDetailComponent/>} />
           <Route path="/user" element={<div>User</div>} />
 
           <Route path="*" element={<div>notfound</div>} />
