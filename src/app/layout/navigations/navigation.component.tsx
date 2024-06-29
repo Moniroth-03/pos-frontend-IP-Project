@@ -2,8 +2,8 @@ import { NavLink } from "react-router-dom";
 import { FaBoxOpen, FaDesktop, FaUser, FaUserTag } from "react-icons/fa6";
 import { FaFileInvoiceDollar } from "react-icons/fa6";
 import { FaFileInvoice } from "react-icons/fa";
-let arr = [
-  { name: "Dashboard", path: "/dashboard", icon: <FaDesktop /> },
+const arr = [
+  { name: "Dashboard", path: "/", icon: <FaDesktop /> },
   { name: "Orders", path: "/orders", icon: <FaFileInvoiceDollar /> },
   { name: "Orders Detail", path: "/ordersdetail", icon: <FaFileInvoice /> },
   {name: "Inventory", path: "/inventory", icon: <FaBoxOpen/> },
