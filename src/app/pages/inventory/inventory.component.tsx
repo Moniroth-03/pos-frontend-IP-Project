@@ -85,4 +85,4 @@ const InventoryComponent = () => {
     )
 }
 
-export default InventoryComponent
+export default InventoryComponent;

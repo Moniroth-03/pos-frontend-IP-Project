@@ -15,10 +15,7 @@ const initialState: initState = {
         data: null,
         isLoading: false
     },
-    carts : {
-        count: 0,
-        items: []
-    }
+    carts : []
 }
 
 const orderSlice = createSlice({
@@ -26,30 +23,32 @@ const orderSlice = createSlice({
     initialState:initialState,
     reducers:{
         addCart: (state,action: PayloadAction<Product>)=>{
-            const isProductAlrdExist = state.carts?.items.findIndex(item => item?.product.id === action.payload.id); 
-            
+            const isProductAlrdExist = state.carts?.findIndex(item => item?.product.id === action.payload.id); 
             if(isProductAlrdExist != -1){
                 // If the product exists, increment its quantity
-                state.carts.items[isProductAlrdExist].qty += 1;
+                state.carts[isProductAlrdExist].qty += 1;
 
             }else {
-                state.carts?.items.push({product: action.payload, qty: 1})
+                state.carts?.push({product: action.payload, qty: 1})
             }
         },
         removeCart: (state,action: PayloadAction<Product>)=>{
-            const isProductAlrdExist = state.carts?.items.findIndex(item => item?.product.id === action.payload.id); 
+            const isProductAlrdExist = state.carts?.findIndex(item => item?.product.id === action.payload.id); 
             
             if(isProductAlrdExist != -1){
-                // If the product exists, increment its quantity
-                state.carts.items[isProductAlrdExist].qty -= 1;
+                // If the product exists, decrement its quantity
+                if(state.carts[isProductAlrdExist].qty == 1){
+                    const arr = state.carts;
+                    arr?.splice(isProductAlrdExist,1);
+                    state.carts = arr;
+                    return;
+                }
+                state.carts[isProductAlrdExist].qty -= 1;
 
             }
         },
         resetCart: (state) =>{
-            state.carts = {
-                count: 0,
-                items: []
-            }
+            state.carts = []
         }
     },
     extraReducers: builder => {

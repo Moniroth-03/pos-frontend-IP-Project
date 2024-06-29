@@ -41,9 +41,6 @@ export type GetProductByType = {
 }
 
 export type Cart = {
-    count: number;
-    items: {
-        product: Product,
-        qty: number;
-    }[];
-}
+    product: Product,
+    qty: number;  
+}[];

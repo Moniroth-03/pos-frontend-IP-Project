@@ -15,8 +15,8 @@ function App() {
         <Route path="/" element={<LayoutComponent />}>
           <Route index path="" element={<div>Dashboard</div>} />
 
-          <Route path="/customer" element={<div>Customer</div>} />
-          <Route path="/user" element={<div>User</div>} />
+          <Route path="customer" element={<div>Customer</div>} />
+          <Route path="user" element={<div>User</div>} />
           <Route path="orders" element={<Order/>} />
           <Route path="ordersdetail" element={<div>Orders Detail</div>} />
           <Route path="inventory" element={<InventoryComponent />} />
