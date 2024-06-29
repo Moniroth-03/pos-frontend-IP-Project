@@ -31,7 +31,7 @@ const Tablerow = memo(({ item, setView, setEdit, setDel }: props) => {
     return (
         <TableRow>
             <TableCell className="px-2 py-4 relative">
-                <img src="https://www.cbcl.com.kh/wp-content/uploads/2022/08/Coke_VIS1_330ml-e1660726978654.png" alt="no img" className="w-12 aspect-square object-contain absolute top-1/2 -translate-y-1/2 rounded-lg"/>
+                <img src={item.image} alt="no img" className="w-12 aspect-square object-contain bg-gray-300 absolute top-1/2 -translate-y-1/2 rounded-lg"/>
                 <span className="text-sm w-[30ch] truncate ml-14">{item.name}</span>
             </TableCell>
             <TableCell className="text-sm text-gray-500 py-4">{item.code}</TableCell>

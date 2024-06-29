@@ -6,6 +6,7 @@ import { Tres, Tbody, initState } from './auth.type';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getLocalStorage: Tres| any = JSON.parse(localStorage.getItem('user'));
+const getToken: any = localStorage.getItem('token');
 
 const initialState: initState = {
     Data: getLocalStorage || {
@@ -28,7 +29,7 @@ const initialState: initState = {
                 updated_at: null,
             } 
         },
-        token: null
+        token: getToken
     },
     isLoading: false
 }

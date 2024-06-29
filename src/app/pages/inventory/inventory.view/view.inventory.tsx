@@ -10,7 +10,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { IoCloseSharp } from "react-icons/io5";
 import { inventory } from "../inventory.type";
-import { randomInt } from "crypto";
 
 type props = {
   open: boolean;
@@ -31,7 +30,7 @@ const ViewInventory = ({open,setOpen,data}:props) => {
                 {/* Sheet content */}
                 <SheetDescription className="flex grow flex-col gap-3">
 
-                    <img className="flex object-contain max-h-36 mb-2 aspect-square brightness-105" src="https://m.media-amazon.com/images/I/51G22XSlZDL._AC_UF894,1000_QL80_.jpg" alt="no img"/>
+                    <img className="flex object-contain max-h-36 mb-2 aspect-square drop-shadow-lg brightness-105 rounded-lg bg-gray-300 w-fit self-center" src={data?.image} alt="no img"/>
 
                     <strong className="border-b text-slate-900 border-b-gray-300 py-2 text-center w-full">Product detail</strong>
                     <section className="grid grid-cols-2 px-2"> 
@@ -45,9 +44,9 @@ const ViewInventory = ({open,setOpen,data}:props) => {
                       <div className="text-end flex flex-col gap-4 text-gray-500">
                         <span className="text-sm">{data?.name}</span>
                         <span className="text-sm">{data?.code}</span>
-                        <span className="text-sm">{data?.name}</span>
+                        <span className="text-sm">{data?.type.name}</span>
                         <span className="text-sm">{(Math.random()*100).toFixed(0)}</span>
-                        <span className="text-sm">{data?.unit_price}</span>
+                        <span className="text-sm">${data?.unit_price}</span>
                       </div>
                     </section>
 

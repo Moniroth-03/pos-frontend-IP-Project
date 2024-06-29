@@ -36,6 +36,10 @@ export type inventory = {
     discount: string | number;
     created_at: Date;
     updated_at: Date;
+    type: {
+        id: number;
+        name: string;
+    }
 }
 
 export type initState = {
