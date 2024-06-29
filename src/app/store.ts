@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authSlice from './auth/auth.slice.js'
+import inventorySlice from './pages/inventory/inventory.slice.ts'
 import orderSlice from './pages/order/order.slice.ts'
 
 
@@ -7,6 +8,7 @@ export const store = configureStore({
   reducer: {
     auth: authSlice,
     order: orderSlice,
+    inventory: inventorySlice,
   },
   devTools: true
 })

@@ -25,6 +25,7 @@ const useLogin = () => {
                 return;
             }
             localStorage.setItem('user',JSON.stringify(action.payload));
+            localStorage.setItem('token',JSON.stringify(action.payload.token));
             navigate('/');
         })
     } 
