@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import authSlice from './auth/auth.slice.js'
 import inventorySlice from './pages/inventory/inventory.slice.ts'
 import orderSlice from './pages/order/order.slice.ts'
+import userSlice from './pages/user/user.slice.ts'
 
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
     auth: authSlice,
     order: orderSlice,
     inventory: inventorySlice,
+    user: userSlice,
   },
   devTools: true
 })

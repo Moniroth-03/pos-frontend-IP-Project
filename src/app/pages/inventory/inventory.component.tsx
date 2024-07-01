@@ -53,7 +53,7 @@ const InventoryComponent = () => {
                             <TableHead className="text-sm w-[12ch] text-slate-900 font-semibold">Price</TableHead>
                             <TableHead className="text-sm w-[10ch] text-slate-900 font-semibold">In Stock</TableHead>
                             <TableHead className="text-sm text-slate-900 font-semibold">Category</TableHead>
-                            <TableHead className="text-sm text-slate-900 font-semibold w-[28ch]">Supplier</TableHead>
+                            <TableHead className="text-sm text-slate-900 font-semibold w-[24ch]">Supplier</TableHead>
                             <TableHead className="text-sm text-slate-900 font-semibold w-[12ch]">Date</TableHead>
                             <TableHead className="w-24 text-sm text-slate-900 font-semibold text-center">Action</TableHead>
                         </TableRow>
@@ -70,15 +70,15 @@ const InventoryComponent = () => {
                                     setDel={handleDel} />
                         
                         ))}
-                        {/* i have to place it outside of the menu because thre is an error where if menu close the sheet close too */}
-                    
-                        <ViewInventory open={view} setOpen={setView} data={selectedItem} />
-                        <UpdateInventory open={edit} setOpen={setEdit} data={selectedItem}/>
-                        <DeleteInventory open={del} setOpen={setDel} data={selectedItem} />
+                        
                         
                     </TableBody>
-
                 </Table>
+                {/* i have to place it outside of the menu because thre is an error where if menu close the sheet close too */}
+            
+                <ViewInventory open={view} setOpen={setView} data={selectedItem} />
+                <UpdateInventory open={edit} setOpen={setEdit} data={selectedItem}/>
+                <DeleteInventory open={del} setOpen={setDel} data={selectedItem} />
 
             </section>}
         </main>

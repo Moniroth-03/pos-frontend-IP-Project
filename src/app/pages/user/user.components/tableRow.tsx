@@ -17,11 +17,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { memo } from "react";
-import { inventory } from "../inventory.type";
+import { user } from "../user.type";
 import env from "@/environments/environment";
 
 type props = {
-    item: inventory;
+    item: user;
     setView: any;
     setEdit: any;
     setDel: any;
@@ -32,17 +32,16 @@ const Tablerow = memo(({ item, setView, setEdit, setDel }: props) => {
     return (
         <TableRow>
             <TableCell className="px-2 py-4 relative">
-                <img src={env.img_url + item.image} alt="no img" className="w-12 aspect-square object-contain absolute top-1/2 -translate-y-1/2 rounded-lg"/>
-                <span className="text-sm w-[30ch] truncate ml-14">{ item.name}</span>
+                <img src={env.img_url + item.avatar} alt="no img" className="w-12 aspect-square object-contain absolute top-1/2 -translate-y-1/2 rounded-lg"/>
+                <div className="ml-14 flex flex-col">
+                    <span className="text-sm w-[30ch] truncate font-medium">{item.name}</span>
+                    <span className="text-sm text-gray-500">{item.role.name}</span>
+                </div>
             </TableCell>
-            <TableCell className="text-sm text-gray-500 py-4">{item.code}</TableCell>
-            <TableCell className="text-sm text-gray-500 py-4">${item.unit_price}</TableCell>
-            <TableCell className="text-sm text-gray-500 py-4">{item.id}</TableCell>
-            <TableCell className="text-sm text-gray-500 py-4">{item.type.name}</TableCell>
-            <TableCell className="text-sm text-gray-500 flex py-4">
-                <span className="text-sm w-[27ch] truncate">chharngchhit</span>
-            </TableCell>
-            <TableCell className="text-sm text-gray-500 py-4">{ item.updated_at.toString().split('T',1) }</TableCell>
+            <TableCell className="text-sm text-gray-500 py-4">{item.email}</TableCell>
+            <TableCell className="text-sm text-gray-500 py-4">{item.phone}</TableCell>
+            <TableCell className="text-sm text-gray-500 py-4">{item.phone}</TableCell>
+            {/* <TableCell className="text-sm text-gray-500 py-4">{ item.created_at.toString() }</TableCell> */}
             <TableCell className="text-sm flex justify-center py-4">
                 <DropdownMenu>
                     <DropdownMenuTrigger>

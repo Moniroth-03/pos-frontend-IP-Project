@@ -8,6 +8,7 @@ import CustomerDetailComponent from "./layout/navigations-components/customers/c
 import InventoryComponent from "./pages/inventory/inventory.component";
 import Order from "./pages/order/order.component";
 import NotFound from "./pages/notfound/notfound.component";
+import UserComponent from "./pages/user/user.component";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route index path="" element={<div>Dashboard</div>} />
           <Route path="customer" element={<CustomerComponent/>} />
           <Route path="customer/:id" element={<CustomerDetailComponent/>} />
-          <Route path="user" element={<div>User</div>} />
+          <Route path="user" element={<UserComponent/>} />
           <Route path="orders" element={<Order/>} />
           <Route path="ordersdetail" element={<div>Orders Detail</div>} />
           <Route path="inventory" element={<InventoryComponent />} />

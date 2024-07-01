@@ -16,8 +16,8 @@ const Order = () => {
     const cart = useSelector(selectCart);
 
     return (
-        <main className="w-full grid grid-cols-3">
-            <div className="col-span-2">
+        <main className="w-full grid grid-cols-4">
+            <div className="col-span-3">
                 <section className="flex justify-between w-full">
                     <div className="flex gap-2 items-center">
                         <FaHome size={'1.1rem'}/>
@@ -42,7 +42,19 @@ const Order = () => {
 
                             <TabsContent value={active}>
                                 {products?.isLoading? <LoadingSpinner/>:
-                                <ul className="grid grid-cols-5 gap-4">
+                                <ul className="grid grid-cols-5 gap-4 pr-4 overflow-auto">
+                                    {products.data?.map((item,key)=>(
+                                        <Card key={key} item={item} active={cart?.findIndex(prod => prod.product.id == item.id)}/>
+                                    ))}
+                                    {products.data?.map((item,key)=>(
+                                        <Card key={key} item={item} active={cart?.findIndex(prod => prod.product.id == item.id)}/>
+                                    ))}
+                                    {products.data?.map((item,key)=>(
+                                        <Card key={key} item={item} active={cart?.findIndex(prod => prod.product.id == item.id)}/>
+                                    ))}
+                                    {products.data?.map((item,key)=>(
+                                        <Card key={key} item={item} active={cart?.findIndex(prod => prod.product.id == item.id)}/>
+                                    ))}
                                     {products.data?.map((item,key)=>(
                                         <Card key={key} item={item} active={cart?.findIndex(prod => prod.product.id == item.id)}/>
                                     ))}
@@ -57,7 +69,6 @@ const Order = () => {
 
 
 
-
             {/* order detail on the right side */}
             <section className="bg-gray-100 rounded-lg">
                 <div className="w-full flex justify-between gap-2 p-4">
@@ -65,7 +76,7 @@ const Order = () => {
                     <p>Total: { getCartTotalItem(cart) || 0 }x</p>
                 </div>
                 {/* list cart item curently in the cart it is also responsive to the order product list if u add or delete it will reflect realtime */}
-                {products.isLoading? '':
+                
                 <div className="flex flex-col px-2 h-1/2 overflow-y-auto grow overflow-x-hidden pr-2">
                     {
                         cart?.map((element,index)=>(
@@ -73,7 +84,6 @@ const Order = () => {
                         ))
                     }
                 </div>
-                }
 
                 {/* this is the receipt detail  */}
                 <div className="mt-2">
@@ -91,7 +101,7 @@ const Order = () => {
                     </div>
                     <div className="flex justify-between px-2 pt-2 mt-2 border-t border-t-gray-200">
                         <p>Tax</p>
-                        <p className="font-medium">${ (( getCartTotalItemCost(cart) || 0 ) + ( getCartTotalItemCost(cart) || 0 ) * 0.01) * 0.5 } </p>
+                        <p className="font-medium">${ ((( getCartTotalItemCost(cart) || 0 ) + ( getCartTotalItemCost(cart) || 0 ) * 0.01) * 0.5).toFixed(2) } </p>
                     </div>
                     <div className="mx-4 mt-4">
                         <Button variant="default" className="w-full bg-emerald-600 hover:bg-emerald-700">Order</Button>
