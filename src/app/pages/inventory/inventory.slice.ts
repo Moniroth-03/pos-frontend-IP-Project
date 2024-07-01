@@ -8,7 +8,6 @@ import { toast } from 'sonner';
 
 const initialState: initState = {
     isLoading: false,
-    message: null,
     data: []
 }
 
@@ -22,61 +21,54 @@ const inventorySlice = createSlice({
         .addCase(getProduct.fulfilled, (state, action: PayloadAction<InventoryGet>)=> {
             state.isLoading = false;
             state.data = action.payload.data;
-            state.message = action.payload.message;
         })
         .addCase(getProduct.pending,(state)=>{
             state.isLoading = true;
         })
         .addCase(getProduct.rejected,(state, action)=>{
             state.isLoading = false;
-            state.message = action.payload as string;
-            toast.error(state.message)
+            toast.error(action.payload)
             
         })
 
         //Create
         .addCase(CreateProduct.fulfilled, (state, action: PayloadAction<InventoryMessage>)=>{
             state.isLoading = false;
-            state.message = action.payload.message;
-            toast.success(state.message);
+            toast.error(action.payload.message)
         })
         .addCase(CreateProduct.pending, (state)=>{
             state.isLoading = true;
         })
         .addCase(CreateProduct.rejected, (state, action )=>{
             state.isLoading = false;
-            state.message = action.payload as string;
-            toast.error(state.message)
+            toast.error(action.payload)
         })
 
         //Update
         .addCase(UpdateProduct.fulfilled, (state, action: PayloadAction<InventoryMessage>)=>{
             state.isLoading = false;
-            state.message = action.payload.message;
-            toast.success(state.message);
+            toast.error(action.payload.message)
         })
         .addCase(UpdateProduct.pending, (state)=>{
             state.isLoading = true;
         })
         .addCase(UpdateProduct.rejected, (state, action )=>{
             state.isLoading = false;
-            state.message = action.payload as string;
-            toast.error(state.message)
+            toast.error(action.payload)
         })
 
         //Delete
         .addCase(DeleteProduct.fulfilled, (state, action: PayloadAction<InventoryMessage>)=>{
             state.isLoading = false;
-            state.message = action.payload.message;
-            toast.success(state.message);
+            toast.error(action.payload.message)
         })
         .addCase(DeleteProduct.pending, (state)=>{
             state.isLoading = true;
         })
-        .addCase(DeleteProduct.rejected, (state, action )=>{
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .addCase(DeleteProduct.rejected, (state, action: PayloadAction<any> )=>{
             state.isLoading = false;
-            state.message = action.payload as string;
-            toast.error(state.message)
+            toast.error(action.payload.message)
         })
     }
 })

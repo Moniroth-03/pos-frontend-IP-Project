@@ -13,7 +13,7 @@ const arr = [
 
 const NavigationComponent = () => {
   return (
-    <div className="flex flex-col gap-2 w-[200px] h-screen border shadow-md rounded-sm bg-white border-t-0 p-4">
+    <div className="flex flex-col gap-2 w-[230px] h-screen border shadow-md rounded-sm bg-white border-t-0 p-4">
       {arr.map((obj) => (
         <NavLink
           to={obj.path}

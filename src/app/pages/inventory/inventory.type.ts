@@ -23,6 +23,7 @@ export type InventoryUpdateReq = {
 }
 
 export type InventoryMessage = {
+    status?: string;
     message: string;
 }
 
@@ -33,6 +34,7 @@ export type inventory = {
     name: string;
     image: string;
     unit_price: number;
+    in_stock?: number;
     discount: string | number;
     created_at: Date;
     updated_at: Date;
@@ -44,6 +46,5 @@ export type inventory = {
 
 export type initState = {
     isLoading: boolean;
-    message: string | null;
     data: inventory[];
 }

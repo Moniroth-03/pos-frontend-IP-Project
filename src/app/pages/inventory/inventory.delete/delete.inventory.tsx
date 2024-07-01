@@ -9,7 +9,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { useDispatch } from "react-redux";
-import { DeleteProduct } from "../inventory.service";
+import { DeleteProduct, getProduct } from "../inventory.service";
 import { inventory } from "../inventory.type";
 import { AppDispatch } from "@/app/store";
 
@@ -23,6 +23,12 @@ type props = {
 const DeleteInventory = ({open,setOpen,data}:props) => {
 
   const dispatch:AppDispatch = useDispatch();
+  const handleDelete = (id: number) =>{
+    try { 
+      dispatch(DeleteProduct(id));
+      dispatch(getProduct());
+    }catch(e){ /* empty */ }
+  }
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
@@ -31,7 +37,7 @@ const DeleteInventory = ({open,setOpen,data}:props) => {
         <AlertDialogHeader>
           <div className="flex gap-2">
             <div>
-              <AlertDialogTitle>Delete item <span className="text-red-600">{ data?.name }</span></AlertDialogTitle>
+              <AlertDialogTitle>Delete item <span className="text-red-600">{ data?.id }</span></AlertDialogTitle>
               <AlertDialogDescription>
                 This action cannot be undone. This will permanently remove this item. Are you Sure?
               </AlertDialogDescription>
@@ -41,7 +47,7 @@ const DeleteInventory = ({open,setOpen,data}:props) => {
 
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className="bg-red-500 hover:bg-red-600" onClick={()=>dispatch(DeleteProduct(data.id))}>Continue</AlertDialogAction>
+          <AlertDialogAction className="bg-red-500 hover:bg-red-600" onClick={()=>handleDelete(data.id)}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
