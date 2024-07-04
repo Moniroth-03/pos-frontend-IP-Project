@@ -6,6 +6,8 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { FormatDateTime } from "@/app/utils/dateTimeFormat";
 import env from "@/environments/environment";
 import noimg from '@/assets/noimg.svg';
+import axiosPrivate from "@/app/api";
+import LoadingSpinner from "@/app/layout/loading/loading";
 
 const ViewCustomer = () => {
   const { id } = useParams();
@@ -14,8 +16,12 @@ const ViewCustomer = () => {
   const [img,setImg] = useState('');
 
   useEffect(()=>{
-    const fetch = ()=>{
-      
+    const fetch = async ()=>{
+      axiosPrivate.get(env.api_url + `/user/view?id=${id}`).then(
+        (res)=>{
+          setData(res.data.data);
+        }
+      )
     }
     
     fetch();
@@ -30,6 +36,8 @@ const ViewCustomer = () => {
   }
 
   return (
+    <>
+    {!data? <div className="w-full flex justify-center"><LoadingSpinner/></div> :
     <section className="w-full px-2 flex flex-col gap-4">
       <div className="flex flex-row justify-between items-center mb-6 relative">
         <div className="flex flex-row items-center gap-4">
@@ -44,7 +52,7 @@ const ViewCustomer = () => {
       </div>
 
 
-      <div className="flex flex-col gap-4 items-center mb-6">
+      <div className="flex flex-col gap- items-center mb-6">
 
         <img className="w-32 aspect-square ring-gray-200 ring-1 bg-gray-300 rounded-full mb-2" src={img} alt="no img" onError={()=>handleErrror(noimg)}/>
         <h2 className="font-semibold text-lg">{data?.name}</h2>
@@ -78,11 +86,11 @@ const ViewCustomer = () => {
             <span>{data?.email}</span>
           </div>
 
-        <div className="flex flex-row items-center">
+        <div className="flex gap-2 flex-row items-center">
           <span>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" >
               <path d="M14 6H6C5.068 6 4.602 6 4.234 6.152C3.99137 6.25262 3.77093 6.40005 3.58528 6.58588C3.39963 6.7717 3.2524 6.99227 3.152 7.235C3 7.602 3 8.068 3 9C3.79565 9 4.55871 9.31607 5.12132 9.87868C5.68393 10.4413 6 11.2044 6 12C6 12.7956 5.68393 13.5587 5.12132 14.1213C4.55871 14.6839 3.79565 15 3 15C3 15.932 3 16.398 3.152 16.765C3.2524 17.0077 3.39963 17.2283 3.58528 17.4141C3.77093 17.5999 3.99137 17.7474 4.234 17.848C4.602 18 5.068 18 6 18H14M14 6H18C18.932 6 19.398 6 19.765 6.152C20.0078 6.25251 20.2284 6.3999 20.4143 6.58572C20.6001 6.77155 20.7475 6.99218 20.848 7.235C21 7.602 21 8.068 21 9C20.2044 9 19.4413 9.31607 18.8787 9.87868C18.3161 10.4413 18 11.2044 18 12C18 12.7956 18.3161 13.5587 18.8787 14.1213C19.4413 14.6839 20.2044 15 21 15C21 15.932 21 16.398 20.848 16.765C20.7475 17.0078 20.6001 17.2284 20.4143 17.4143C20.2284 17.6001 20.0078 17.7475 19.765 17.848C19.398 18 18.932 18 18 18H14M14 6V18"
-                stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </span>
           <span>{data?.loyalty_points}</span>
@@ -106,6 +114,8 @@ const ViewCustomer = () => {
         </div>
       </div>
     </section>
+    }
+    </>
   )
 }
 

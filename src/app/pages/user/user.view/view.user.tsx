@@ -6,6 +6,8 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { FormatDateTime } from "@/app/utils/dateTimeFormat";
 import env from "@/environments/environment";
 import noimg from '@/assets/noimg.svg';
+import axiosPrivate from "@/app/api";
+import LoadingSpinner from "@/app/layout/loading/loading";
 
 const ViewUser = () => {
   const { id } = useParams();
@@ -14,8 +16,12 @@ const ViewUser = () => {
   const [img,setImg] = useState('');
 
   useEffect(()=>{
-    const fetch = ()=>{
-      
+    const fetch = async ()=>{
+      axiosPrivate.get(env.api_url + `/user/view?id=${id}`).then(
+        (res)=>{
+          setData(res.data.data);
+        }
+      )
     }
     
     fetch();
@@ -30,6 +36,8 @@ const ViewUser = () => {
   }
 
   return (
+    <>
+    {!data? <div className="w-full flex justify-center"><LoadingSpinner/></div> :
     <section className="w-full px-2 flex flex-col gap-4">
       <div className="flex flex-row justify-between items-center mb-6 relative">
         <div className="flex flex-row items-center gap-4">
@@ -96,6 +104,9 @@ const ViewUser = () => {
         </div>
       </div>
     </section>
+    }
+    </>
+    
   )
 }
 
