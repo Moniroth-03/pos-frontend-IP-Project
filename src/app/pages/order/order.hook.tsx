@@ -1,30 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AppDispatch } from "@/app/store"
-import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
-import { getCategory, getProductByType } from "./order.service";
+import { useDispatch, useSelector } from "react-redux"
 import { Cart } from "./order.type";
+import { selectCart, selectCategory, selectOrderProduct } from "./order.slice";
 
 const useOrder = () => {
-    const dispatch:AppDispatch = useDispatch();
-    const [active,setActive] = useState("1");
-
-    useEffect(()=>{
-        const fetchCategory = ()=>{
-            dispatch(getCategory());
-        }
-        const fetchProduct = ()=> { 
-            dispatch(getProductByType(1));
-        }
-
-        fetchCategory();
-        fetchProduct();
-    },[])
-
-    const onTabChange = (id: number)=> {
-        setActive(id.toString())
-        dispatch(getProductByType(id));
-    }
+    const categories = useSelector(selectCategory);
+    const products = useSelector(selectOrderProduct);
+    const cart = useSelector(selectCart);
 
     const getCartTotalItem = (array:Cart | null) =>{
         if( array == null || array.length == 0 ) return;
@@ -45,7 +27,7 @@ const useOrder = () => {
     }
 
     return {
-        onTabChange,active,setActive,getCartTotalItem,getCartTotalItemCost
+       getCartTotalItem,getCartTotalItemCost,categories,products,cart
     }
 }
 

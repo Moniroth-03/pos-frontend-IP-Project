@@ -2,7 +2,7 @@
 
 import {  FaRegEye, FaRegTrashAlt} from "react-icons/fa";
 import { BsPencilSquare, BsThreeDotsVertical, } from "react-icons/bs";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 
 import {
   DropdownMenu,
@@ -43,12 +43,10 @@ const Tablerow = memo(({ item, setView, setEdit, setDel }: props) => {
                 <span className="text-sm w-[27ch] truncate">chharngchhit</span>
             </TableCell>
             <TableCell className="text-sm text-gray-500 py-4">{ item.updated_at.toString().split('T',1) }</TableCell>
-            <TableCell className="text-sm flex justify-center py-4">
+            <TableCell className="text-sm flex justify-center py-4 relative">
                 <DropdownMenu>
-                    <DropdownMenuTrigger>
-                        <Button variant={"ghost"} className="rounded-full">
-                            <BsThreeDotsVertical/>
-                        </Button>
+                    <DropdownMenuTrigger className="px-3 py-2 hover:bg-gray-200 rounded-full">
+                        <BsThreeDotsVertical/>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                         <DropdownMenuLabel>Action</DropdownMenuLabel>
@@ -66,7 +64,7 @@ const Tablerow = memo(({ item, setView, setEdit, setDel }: props) => {
                             <span className="font-medium pl-2 text-red-500 text-sm">Delete</span>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
-                    </DropdownMenu>
+                </DropdownMenu>
             </TableCell>
         </TableRow>
   )

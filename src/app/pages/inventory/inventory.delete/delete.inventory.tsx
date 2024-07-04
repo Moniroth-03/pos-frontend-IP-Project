@@ -37,7 +37,7 @@ const DeleteInventory = ({open,setOpen,data}:props) => {
         <AlertDialogHeader>
           <div className="flex gap-2">
             <div>
-              <AlertDialogTitle>Delete item <span className="text-red-600">{ data?.id }</span></AlertDialogTitle>
+              <AlertDialogTitle>Delete item <span className="text-red-600">{ data?.name }</span></AlertDialogTitle>
               <AlertDialogDescription>
                 This action cannot be undone. This will permanently remove this item. Are you Sure?
               </AlertDialogDescription>

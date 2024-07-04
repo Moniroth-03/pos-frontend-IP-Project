@@ -2,8 +2,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store';
 import { toast } from 'sonner';
-import { Category, GetProductByType, Product, initState } from './order.type';
-import { getCategory, getProductByType } from './order.service';
+import { Category, GetAllProduct, PostCategoryRes, Product, initState } from './order.type';
+import { createCategory, getProductByNameOrCode, getCategory } from './order.service';
+import { FormatDateTime } from '@/app/utils/dateTimeFormat';
 
 
 const initialState: initState = {
@@ -66,17 +67,33 @@ const orderSlice = createSlice({
             toast.error(action.payload as string); 
         })
 
-        //getProductbyType
-        .addCase(getProductByType.fulfilled, (state, action: PayloadAction<GetProductByType>)=> {
-            state.products.isLoading = false;
-            state.products.data = action.payload.data;
+
+        // CreateCategory
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .addCase(createCategory.fulfilled, (state, action: PayloadAction<PostCategoryRes>)=> {
+            const date = new Date(action.payload.data.created_at.toString());
+            toast.success(action.payload.message,{
+                description: FormatDateTime(date),  
+            }); 
         })
-        .addCase(getProductByType.pending,(state)=>{
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .addCase(createCategory.rejected,(state, action: PayloadAction<any>)=>{
+            toast.error(action.payload?.message as string); 
+        })
+
+
+        //getAllProduct
+        .addCase(getProductByNameOrCode.fulfilled, (state, action: PayloadAction<GetAllProduct>)=> {
+            state.products.isLoading = false;
+            state.products.data = action.payload;
+        })
+        .addCase(getProductByNameOrCode.pending,(state)=>{
             state.products.isLoading = true;
         })
-        .addCase(getProductByType.rejected,(state, action)=>{
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .addCase(getProductByNameOrCode.rejected,(state, action: PayloadAction<any>)=>{
             state.products.isLoading = false;
-            toast.error(action.payload as string); 
+            toast.error(action.payload.message as string); 
         })
     }
 })

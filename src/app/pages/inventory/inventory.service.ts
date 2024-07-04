@@ -72,7 +72,7 @@ export const DeleteProduct = createAsyncThunk<
     "inventory/delete",
     async (id,thunkAPI)=>{
         try {
-            const res = await axiosPrivate.delete<InventoryMessage>(env.api_url+'/product/type/delete?id=' + id);
+            const res = await axiosPrivate.delete<InventoryMessage>(env.api_url+'/product/delete?id=' + id);
             return res.data;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {

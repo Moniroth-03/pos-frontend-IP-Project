@@ -1,67 +1,179 @@
 import { FaHome } from "react-icons/fa";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
 import useOrder from "./order.hook";
-import { selectCart, selectCategory, selectOrderProduct } from "./order.slice";
-import { useSelector } from "react-redux";
-import LoadingSpinner from "@/app/layout/loading/loading";
+// import LoadingSpinner from "@/app/layout/loading/loading";
 import Card from "./subcomponents/card";
 import OrderItem from "./subcomponents/ordereditem";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
+import { cn } from "@/lib/utils";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/app/store";
+import { Input } from "@/components/ui/input";
+import { FaMagnifyingGlass } from "react-icons/fa6";
+import { getCategory, getProductByNameOrCode } from "./order.service";
+import { Link, useSearchParams } from "react-router-dom";
+
 
 const Order = () => {
-    const { onTabChange,active,getCartTotalItem,getCartTotalItemCost } = useOrder();
+    const { getCartTotalItem,getCartTotalItemCost,categories,products,cart } = useOrder();
+    const dispatch:AppDispatch = useDispatch();
+    const [open,setOpen] = useState(false);//open close combobox of category filter
+    const [value, setValue] = useState("");//active value for the filter 
+    const [key,setKey] = useState("");
 
-    const categories = useSelector(selectCategory);
-    const products = useSelector(selectOrderProduct);
-    const cart = useSelector(selectCart);
+    // unused for now because i have solve the problem where if the page is more than 10 page it will overflow to infinite width 
+    const getPagination = (totpage: number) =>{
+        const content = [];
+        for (let i = 1; i <= totpage ; i++){
+            content.push(
+            <PaginationItem>
+                <PaginationLink isActive={i == products.data?.current_page} href={`?page=${i}`}>{i}</PaginationLink>
+            </PaginationItem>);
+        }
+        return content;
+    }
 
+    //this is use to get the whole url of the browser
+    const [queryParameters] = useSearchParams()
+
+    useEffect(()=>{
+        const fetchCategory = ()=>{
+            dispatch(getCategory());
+
+            // using queryParam.get('page') to get the page variable from the url which should be page=1 then dispatch it to the product action/service to call api for data
+            dispatch(getProductByNameOrCode({ key: key , page: queryParameters.get('page') || '' }));
+        }
+
+        fetchCategory();
+    },[queryParameters, key])
+    
     return (
         <main className="w-full grid grid-cols-4">
             <div className="col-span-3">
-                <section className="flex justify-between w-full">
+                <section className="flex justify-between items-center w-full">
                     <div className="flex gap-2 items-center">
                         <FaHome size={'1.1rem'}/>
                         <span>Orders</span>
                     </div>
+                    <div className="flex px-4 justify-end gap-2">
+                        {/* search bar input */}
+                        <div className="w-fit relative">
+                            <FaMagnifyingGlass size={'0.8rem'} className="absolute text-gray-600 left-4 bottom-1/2 translate-y-1/2"/>
+                            <Input value={key} onChange={(e)=>{
+                                    setKey(e.target.value);
+                                    if(key.length >0){
+                                        setValue("");
+                                    }
+                                    // dispatch(getProductByNameOrCode({ key: e.target.value, page: products.data?.current_page || '' }));
+                                }} 
+                                className="pl-10" type="text" placeholder="Search product..."/>
+                        </div>
+
+
+
+                        {/* category filter */}
+                        <Popover open={open} onOpenChange={setOpen}>
+                            <PopoverTrigger asChild>
+                                <Button
+                                variant="outline"
+                                role="combobox"
+                                aria-expanded={open}
+                                className="w-[200px] justify-between"
+                                >
+                                {value
+                                    ? categories.data?.find((i) => i.name == value)?.name
+                                    : "Select category..."}
+                                <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-[200px] p-0">
+                                <Command>
+                                <CommandInput placeholder="Search category..." className="h-9" />
+                                <CommandList>
+                                    <CommandEmpty>No Category found.</CommandEmpty>
+                                    <CommandGroup>
+                                    {categories.data?.map((cat) => (
+                                        <CommandItem
+                                        key={cat.id}
+                                        value={cat.name}
+                                        onSelect={(currentValue) => {
+                                            setValue(currentValue == value ? "" : currentValue)
+                                            setOpen(false)
+                                        }}
+                                        >
+                                        {cat.name}
+                                        <CheckIcon
+                                            className={cn("ml-auto h-4 w-4",value == cat.name ? "opacity-100" : "opacity-0"
+                                            )}
+                                        />
+                                        </CommandItem>
+                                    ))}
+                                    </CommandGroup>
+                                </CommandList>
+                                </Command>
+                            </PopoverContent>
+                        </Popover>
+                    </div>
                 </section>
 
 
-                {/* list tab and data */}
-                <section className="py-2 w-full">
-                    <h1 className="font-semibold text-xl mb-4">Categories</h1>
+                <section className="py-2 w-full mt-6 h-full max-h-[75%]">
                     
-                    <div>
-                        {categories.isLoading? <LoadingSpinner/>:
-                        <Tabs defaultValue="1">
-                            <TabsList className="overflow-clip w-fit h-fit pb-[1.6px]">
-                                {categories?.data?.map((item,key)=>(
-                                    <TabsTrigger key={key} value={item.id.toString()} onClick={()=>onTabChange(item.id)}>{item.name}</TabsTrigger>
-                                ))}
-                            </TabsList>
-                            
 
-                            <TabsContent value={active}>
-                                {products?.isLoading? <LoadingSpinner/>:
-                                <ul className="grid grid-cols-5 gap-4 pr-4 overflow-auto">
-                                    {products.data?.map((item,key)=>(
-                                        <Card key={key} item={item} active={cart?.findIndex(prod => prod.product.id == item.id)}/>
-                                    ))}
-                                    {products.data?.map((item,key)=>(
-                                        <Card key={key} item={item} active={cart?.findIndex(prod => prod.product.id == item.id)}/>
-                                    ))}
-                                    {products.data?.map((item,key)=>(
-                                        <Card key={key} item={item} active={cart?.findIndex(prod => prod.product.id == item.id)}/>
-                                    ))}
-                                    {products.data?.map((item,key)=>(
-                                        <Card key={key} item={item} active={cart?.findIndex(prod => prod.product.id == item.id)}/>
-                                    ))}
-                                    {products.data?.map((item,key)=>(
-                                        <Card key={key} item={item} active={cart?.findIndex(prod => prod.product.id == item.id)}/>
-                                    ))}
-                                </ul>
-                                }
-                            </TabsContent>
-                        </Tabs>
+                    {/* list item */}
+                    <ul className="grid grid-cols-5 gap-4 h-full pr-4 mb-4 overflow-auto">
+                        {
+                          !products.isLoading && products.data?.data?.map((item,i)=>(
+                            <Card key={i} item={item} category={item.type?.name || 'beer'} active={cart?.findIndex(prod => prod.product.id == item.id)}/>
+                          ))
+                        }
+                    </ul>
+                    <div className="fixed bottom-6 left-1/2 -translate-x-1/2">
+                        {
+                        !products.isLoading && 
+                            <Pagination>
+                                <PaginationContent>
+                                    <PaginationItem>
+                                        <Link to={`?page=${ products?.data?.current_page - 1 > 1 ? products?.data?.current_page - 1 : 1}`}><PaginationPrevious/></Link>
+                                    </PaginationItem>
+
+                                    {/* {
+                                    products.data?.total != undefined && getPagination(products?.data?.last_page) 
+                                    } */}
+                                    
+                                    <PaginationItem>
+                                        <PaginationEllipsis />
+                                    </PaginationItem>
+
+                                    <PaginationItem>
+                                        <Link to={`?page=${ products?.data?.current_page + 1 > products.data?.last_page? products.data?.last_page : products?.data?.current_page + 1}`}><PaginationNext/></Link>
+                                    </PaginationItem>
+                                </PaginationContent>
+                            </Pagination>
                         }
                     </div>
                 </section>
@@ -69,6 +181,9 @@ const Order = () => {
 
 
 
+
+
+                            
             {/* order detail on the right side */}
             <section className="bg-gray-100 rounded-lg">
                 <div className="w-full flex justify-between gap-2 p-4">

@@ -45,7 +45,7 @@ const UserComponent = () => {
             
             <section className="mt-4 overflow-y-auto h-[70dvh]">
                 <Table className="bg-white border-2 border-gray-200 drop-shadow-md">
-                    <TableCaption>A list of User Account.</TableCaption>
+                    <TableCaption>No more user data.</TableCaption>
                     <TableHeader className="bg-gray-100">
                         <TableRow>
                             <TableHead className="text-sm w-[40ch] text-slate-900 font-semibold">Name</TableHead>

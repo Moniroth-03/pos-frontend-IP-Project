@@ -12,16 +12,22 @@ const useInventory = ()=>{
     const [selectedItem,setItem] = useState<inventory | null>(null);
 
     const handleView = useCallback((s: boolean,item:inventory) => {
-        setItem(item);
-        setView(s)
+        setTimeout(() => {   
+            setItem(item);
+            setView(s)
+        }, 100)
     }, []);
     const handleEdit = useCallback((s: boolean,item:inventory) => {
-        setItem(item);
-        setEdit(s)
+        setTimeout(() => {
+            setItem(item);
+            setEdit(s)
+        }, 100)
     }, []);
     const handleDel = useCallback((s: boolean,item:inventory) => {
-        setItem(item);
-        setDel(s)
+        setTimeout(() => {   
+            setItem(item);
+            setDel(s)
+        }, 100)
     }, []);
 
 

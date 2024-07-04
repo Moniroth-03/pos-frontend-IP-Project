@@ -2,7 +2,7 @@
 
 import {  FaRegEye, FaRegTrashAlt} from "react-icons/fa";
 import { BsPencilSquare, BsThreeDotsVertical, } from "react-icons/bs";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 
 import {
   DropdownMenu,
@@ -44,23 +44,21 @@ const Tablerow = memo(({ item, setView, setEdit, setDel }: props) => {
             {/* <TableCell className="text-sm text-gray-500 py-4">{ item.created_at.toString() }</TableCell> */}
             <TableCell className="text-sm flex justify-center py-4">
                 <DropdownMenu>
-                    <DropdownMenuTrigger>
-                        <Button variant={"ghost"} className="rounded-full">
-                            <BsThreeDotsVertical/>
-                        </Button>
+                    <DropdownMenuTrigger className="px-3 py-2 hover:bg-gray-200 rounded-full">
+                        <BsThreeDotsVertical/>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                         <DropdownMenuLabel>Action</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onSelect={()=>setView(true,item)}>                                 
+                        <DropdownMenuItem className="focus-visible:ring-0" onSelect={()=>setView(true,item)}>                                 
                             <FaRegEye className="text-blue-500" size={'1rem'}/>
                             <span className="font-medium pl-2 text-blue-500 text-sm">View</span>
                         </DropdownMenuItem>
-                        <DropdownMenuItem onSelect={()=>setEdit(true,item)}>
+                        <DropdownMenuItem className="focus-visible:ring-0" onSelect={()=>setEdit(true,item)}>
                             <BsPencilSquare className="text-slate-500" size={'1rem'}/>
                             <span className="font-medium pl-2 text-slate-500 text-sm">Edit</span>
                         </DropdownMenuItem>
-                        <DropdownMenuItem onSelect={()=>setDel(true,item)}>
+                        <DropdownMenuItem className="focus-visible:ring-0" onSelect={()=>setDel(true,item)}>
                             <FaRegTrashAlt className="text-red-500" size={'1rem'}/>
                             <span className="font-medium pl-2 text-red-500 text-sm">Delete</span>
                         </DropdownMenuItem>

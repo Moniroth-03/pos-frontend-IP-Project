@@ -1,6 +1,6 @@
 export type initState = {
     products: {
-        data: Product[] | null;
+        data: null | GetAllProduct;
         isLoading: boolean;
     };
     categories: {
@@ -17,6 +17,7 @@ export type Product = {
     name: string;
     image: string;
     unit_price: number;
+    in_stock?: number;
     discount: string | number;
     created_at: Date;
     updated_at: Date;
@@ -35,10 +36,26 @@ export type Category = {
     amount: number;
 }
 
-export type GetProductByType = {
+export interface PostCategoryRes {
+    status: string;
     message: string;
-    data: Product[];
+    data: {
+        name: string;
+        updated_at: Date;
+        created_at: Date;
+        id: number;
+    }
 }
+
+export interface GetAllProduct {
+    message: string;
+    data: Product[]
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+} 
+
 
 export type Cart = {
     product: Product,

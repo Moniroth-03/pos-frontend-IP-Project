@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import { selectInventory } from "./inventory.slice";
 import useInventory from "./inventory.hook";
 import Tablerow from "./inventory.components/tableRow";
-import LoadingSpinner from "@/app/layout/loading/loading";
+// import LoadingSpinner from "@/app/layout/loading/loading";
 
 const InventoryComponent = () => {
 
@@ -27,8 +27,8 @@ const InventoryComponent = () => {
 
     const { isLoading, data } = useSelector(selectInventory);
     return ( 
-        <main className="w-full bg-white">
-            <section className="flex justify-between w-full">
+        <div className="w-full bg-white">
+            <div className="flex justify-between w-full">
                 <div className="flex gap-2 items-center">
                     <FaHome size={'1.1rem'}/>
                     <span>Inventory</span>
@@ -37,18 +37,17 @@ const InventoryComponent = () => {
                 <div>
                     <CreateInventory/>
                 </div>
-            </section>
+            </div>
 
 
             {/* list inventory product */}
-            {isLoading?<LoadingSpinner/>:
             
-            <section className="mt-4 overflow-y-auto h-[70dvh]">
+            <div className="mt-4 overflow-y-auto h-[74dvh]">
                 <Table className="bg-white border-2 border-gray-200 drop-shadow-md">
-                    <TableCaption>A list of inventory stock item.</TableCaption>
+                    <TableCaption>No more inventory data.</TableCaption>
                     <TableHeader className="bg-gray-100">
                         <TableRow>
-                            <TableHead className="text-sm w-[40ch] text-slate-900 font-semibold">Product</TableHead>
+                            <TableHead className="text-sm min-w-[40ch] text-slate-900 font-semibold">Product</TableHead>
                             <TableHead className="text-sm w-[10ch] text-slate-900 font-semibold">Code</TableHead>
                             <TableHead className="text-sm w-[12ch] text-slate-900 font-semibold">Price</TableHead>
                             <TableHead className="text-sm w-[10ch] text-slate-900 font-semibold">In Stock</TableHead>
@@ -60,6 +59,8 @@ const InventoryComponent = () => {
                     </TableHeader>
 
 
+                    
+                    {isLoading? '':
                     <TableBody>
                         {/* loop table data here */}
                         {data.map((item)=>(
@@ -72,16 +73,17 @@ const InventoryComponent = () => {
                         ))}
                         
                         
-                    </TableBody>
-                </Table>
-                {/* i have to place it outside of the menu because thre is an error where if menu close the sheet close too */}
-            
-                <ViewInventory open={view} setOpen={setView} data={selectedItem} />
-                <UpdateInventory open={edit} setOpen={setEdit} data={selectedItem}/>
-                <DeleteInventory open={del} setOpen={setDel} data={selectedItem} />
+                    </TableBody>}
 
-            </section>}
-        </main>
+                    {/* i have to place it outside of the menu because thre is an error where if menu close the sheet close too */}            
+                    <ViewInventory open={view} setOpen={setView} data={selectedItem} />
+                    <UpdateInventory open={edit} setOpen={setEdit} data={selectedItem}/>
+                    <DeleteInventory open={del} setOpen={setDel} data={selectedItem} />
+                </Table>
+                
+
+            </div>
+        </div>
     )
 }
 

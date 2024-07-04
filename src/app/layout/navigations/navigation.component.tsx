@@ -14,8 +14,8 @@ const arr = [
 const NavigationComponent = () => {
   return (
     <div className="flex flex-col gap-2 w-[230px] h-screen border shadow-md rounded-sm bg-white border-t-0 p-4">
-      {arr.map((obj) => (
-        <NavLink
+      {arr.map((obj,k) => (
+        <NavLink key={k}
           to={obj.path}
           className={({ isActive }) =>
             isActive
