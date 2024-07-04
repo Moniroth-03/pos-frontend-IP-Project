@@ -57,7 +57,7 @@ const UserComponent = () => {
                     {isLoading? '':
                     <TableBody>
                         {/* loop table data here */}
-                        {data?.map((item)=>(
+                        {data && data?.map((item)=>(
                             <Tablerow key={item?.id}
                                     item={item}
                                     setEdit={handleEdit}
