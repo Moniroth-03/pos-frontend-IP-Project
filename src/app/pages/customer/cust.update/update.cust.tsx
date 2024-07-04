@@ -5,7 +5,6 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet"
 import {
   Form,
@@ -15,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { MdEmail } from "react-icons/md";
-import { FaPhone, FaTag, FaUser } from "react-icons/fa";
+import { FaPhone, FaUser } from "react-icons/fa";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
@@ -28,9 +27,9 @@ import { useEffect, useState } from "react";
 import LoadingSpinner from "@/app/layout/loading/loading";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/app/store";
-import { UpdateUser as UpdateUsers, getUser } from "../user.service";
+import { UpdateUser as UpdateUsers, getUser } from "../../user/user.service";
 import userimg from '@/assets/user.svg';
-import { user } from "../user.type";
+import { user } from "../../user/user.type";
 
 type props = {
   data: user | null;
@@ -46,7 +45,7 @@ const UpdateUser = ({open,setOpen,data}: props) => {
       email: '',
       phone: '',
       is_active: 0,
-      users_type: 0,
+      users_type: 3,
     },
     mode:'all'
   })
@@ -55,7 +54,7 @@ const UpdateUser = ({open,setOpen,data}: props) => {
 
   const handleSubmitForm = (value: z.infer<typeof formSchema>) =>{
     setSubmit(true);
-    dispatch(UpdateUsers({id: data?.id, body: value}));
+    dispatch(UpdateUsers({ id: data?.id, body: value }));
 
     setSubmit(false);
     dispatch(getUser());
@@ -68,7 +67,7 @@ const UpdateUser = ({open,setOpen,data}: props) => {
         name: data?.name,
         email: data?.email,
         phone: data?.phone,
-        users_type: data?.role.id,
+        users_type: 3,
         is_active: 0,
       });
     }
@@ -133,21 +132,6 @@ const UpdateUser = ({open,setOpen,data}: props) => {
                               className={`absolute bottom-1/2 left-4 scale-90 translate-y-1/2 ${form.formState.errors.phone?'text-red-500':''}`}/>
                               <Input type="text" 
                               placeholder="Phone number" 
-                              {...field} 
-                              className={`pl-12 py-5 outline-none ring-gray-200 transition-all ${form.formState.errors.phone?'ring-1 ring-red-500 text-red-500 focus-visible:ring-red-500 placeholder:text-red-400':''}` }/>
-                            </div>
-                          </FormControl>
-                          <FormMessage className="text-xs"/>
-                      </FormItem>)}/>
-
-                      <FormField control={form.control} name="users_type" render={({ field }) => (
-                      <FormItem className="flex flex-col">
-                          <FormControl>
-                            <div className="relative">
-                              <FaPhone 
-                              className={`absolute bottom-1/2 left-4 scale-90 translate-y-1/2 ${form.formState.errors.phone?'text-red-500':''}`}/>
-                              <Input type="text" 
-                              placeholder="User type" 
                               {...field} 
                               className={`pl-12 py-5 outline-none ring-gray-200 transition-all ${form.formState.errors.phone?'ring-1 ring-red-500 text-red-500 focus-visible:ring-red-500 placeholder:text-red-400':''}` }/>
                             </div>

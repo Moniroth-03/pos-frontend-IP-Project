@@ -3,13 +3,13 @@ import LayoutComponent from "./layout/layout.component";
 import "./App.css";
 import Authentication from "./auth/auth.component";
 import LoginComponent from "./pages/login/login.component";
-import CustomerComponent from "./layout/navigations-components/customers/customer.component";
-import CustomerDetailComponent from "./layout/navigations-components/customers/customerdetail.component";
+import CustomerComponent from "./pages/customer/cust.component";
 import InventoryComponent from "./pages/inventory/inventory.component";
 import Order from "./pages/order/order.component";
 import NotFound from "./pages/notfound/notfound.component";
 import UserComponent from "./pages/user/user.component";
 import ViewUser from "./pages/user/user.view/view.user";
+import ViewCustomer from "./pages/customer/cust.view/view.cust";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         <Route path="/" element={<LayoutComponent />}>
           <Route index path="" element={<div>Dashboard</div>} />
           <Route path="customer" element={<CustomerComponent/>} />
-          <Route path="customer/:id" element={<CustomerDetailComponent/>} />
+          <Route path="customer/:id" element={<ViewCustomer/>} />
           <Route path="user" element={<UserComponent/>} />
           <Route path="user/:id" element={<ViewUser/>} />
           <Route path="orders" element={<Order/>} />

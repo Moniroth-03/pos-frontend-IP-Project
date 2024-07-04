@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { UserCreateRes, UserGet, UserMessage, initState } from './user.type';
 import { RootState } from '@/app/store';
 import { toast } from 'sonner';
-import { CreateUser, DeleteUser, getUser, UpdateUser } from './user.service';
+import { CreateUser, DeleteUser, getCustomer, getUser, UpdateUser } from './user.service';
 import { FormatDateTime } from '@/app/utils/dateTimeFormat';
 
 
@@ -31,6 +31,22 @@ const userSlice = createSlice({
             toast.error(action.payload as string)
             
         })
+
+
+        // Get
+        .addCase(getCustomer.fulfilled, (state, action: PayloadAction<UserGet>)=> {
+            state.isLoading = false;
+            state.data = action.payload.data;
+        })
+        .addCase(getCustomer.pending,(state)=>{
+            state.isLoading = true;
+        })
+        .addCase(getCustomer.rejected,(state, action)=>{
+            state.isLoading = false;
+            toast.error(action.payload as string)
+            
+        })
+
 
         //Create
         .addCase(CreateUser.fulfilled, (state, action: PayloadAction<UserCreateRes>)=>{

@@ -24,6 +24,29 @@ export const getUser = createAsyncThunk<
     }
 )
 
+
+export const getCustomer = createAsyncThunk<
+    UserGet,void, { rejectValue: string }
+>(
+    "user/getcustomer",
+    async (_,thunkAPI)=>{
+        try {
+            const res = await axiosPrivate.get<UserGet>(env.api_url+'/user/customers');
+            return res.data;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+            if (error.response && error.response.data) {
+                return thunkAPI.rejectWithValue(error.response.data);
+            } else if (error.message) {
+                return thunkAPI.rejectWithValue(error.message);
+            } else {
+                return thunkAPI.rejectWithValue('An unknown error occurred');
+            }
+        }
+    }
+)
+
+
 export const UpdateUser = createAsyncThunk<
     UserMessage,UserUpdateReq, { rejectValue: string }
 >(

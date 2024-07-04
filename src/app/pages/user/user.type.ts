@@ -14,15 +14,22 @@ export type UserCreateReq = {
 export type UserCreateRes = {
     message: string;
     data: user;
+    
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
 }
 
 export type UserUpdateReq = {
     id: number;
     body: {   
-        code: string;
-        type_id: number;
-        unit_price: number;
         name: string;
+        email: string;
+        phone: string;
+        users_type: number;
+        is_active: number;
+        avatar?: string;
     }
 }
 

@@ -14,39 +14,34 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form"
-import { MdEmail } from "react-icons/md";
-import { FaPhone, FaTag, FaUser } from "react-icons/fa";
+import { MdEmail, MdOutlinePassword } from "react-icons/md";
+import { FaPhone, FaUser } from "react-icons/fa";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
-import { MdGroups } from "react-icons/md";
+import { FaPlus } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import { useForm } from "react-hook-form"
 import {z} from 'zod';
 import formSchema from "./formschema";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LoadingSpinner from "@/app/layout/loading/loading";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/app/store";
-import { UpdateUser as UpdateUsers, getUser } from "../user.service";
+import { CreateUser as CreateUsers, getUser } from "../../user/user.service";
 import userimg from '@/assets/user.svg';
-import { user } from "../user.type";
 
-type props = {
-  data: user | null;
-  open: any;
-  setOpen: any;
-}
 
-const UpdateUser = ({open,setOpen,data}: props) => {
+const CreateCustomer = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       email: '',
       phone: '',
-      is_active: 0,
-      users_type: 0,
+      password: '',
+      password_confirmation: '',
+      users_type: 3,
     },
     mode:'all'
   })
@@ -55,31 +50,24 @@ const UpdateUser = ({open,setOpen,data}: props) => {
 
   const handleSubmitForm = (value: z.infer<typeof formSchema>) =>{
     setSubmit(true);
-    dispatch(UpdateUsers({id: data?.id, body: value}));
+    dispatch(CreateUsers(value));
 
     setSubmit(false);
     dispatch(getUser());
     form.reset();
   }
 
-  useEffect(() => {
-    if (data) {
-      form.reset({
-        name: data?.name,
-        email: data?.email,
-        phone: data?.phone,
-        users_type: data?.role.id,
-        is_active: 0,
-      });
-    }
-  }, [data, form]);
-
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
+    <Sheet onOpenChange={()=> form.reset()}>
+        {/* click to open Sheet button that will display in component */}
+        <SheetTrigger className="h-9 px-4 py-2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:focus-visible:ring-gray-300 border border-gray-200 bg-white shadow-sm hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50">
+          <FaPlus className="text-emerald-500" size={'0.8rem'}/>
+          <span className="font-medium pl-1 text-emerald-500 text-sm">New</span>  
+        </SheetTrigger>
 
         <SheetContent className="h-full sm:max-w-[600px] py-4 px-4 overflow-auto pb-4">
             <SheetHeader className="w-full">
-                <SheetTitle className="w-4/5 truncate mb-6">Update <span className="font-medium ml-2">{ data?.name }</span></SheetTitle>
+                <SheetTitle className="w-4/5 truncate mb-6">Create new Customer</SheetTitle>
 
 
                 {/* Sheet content */}
@@ -129,7 +117,7 @@ const UpdateUser = ({open,setOpen,data}: props) => {
                       <FormItem className="flex flex-col">
                           <FormControl>
                             <div className="relative">
-                              <MdGroups 
+                              <FaPhone 
                               className={`absolute bottom-1/2 left-4 scale-90 translate-y-1/2 ${form.formState.errors.phone?'text-red-500':''}`}/>
                               <Input type="text" 
                               placeholder="Phone number" 
@@ -140,21 +128,38 @@ const UpdateUser = ({open,setOpen,data}: props) => {
                           <FormMessage className="text-xs"/>
                       </FormItem>)}/>
 
-                      <FormField control={form.control} name="users_type" render={({ field }) => (
+
+
+                    <FormField control={form.control} name="password" render={({ field }) => (
                       <FormItem className="flex flex-col">
                           <FormControl>
                             <div className="relative">
-                              <FaPhone 
-                              className={`absolute bottom-1/2 left-4 scale-90 translate-y-1/2 ${form.formState.errors.phone?'text-red-500':''}`}/>
-                              <Input type="text" 
-                              placeholder="User type" 
+                              <MdOutlinePassword 
+                              className={`absolute bottom-1/2 left-4 scale-90 translate-y-1/2 ${form.formState.errors.password?'text-red-500':''}`}/>
+                              <Input type="password" 
+                              placeholder="Password" 
                               {...field} 
-                              className={`pl-12 py-5 outline-none ring-gray-200 transition-all ${form.formState.errors.phone?'ring-1 ring-red-500 text-red-500 focus-visible:ring-red-500 placeholder:text-red-400':''}` }/>
+                              className={`pl-12 py-5 outline-none ring-gray-200 transition-all ${form.formState.errors.password?'ring-1 ring-red-500 text-red-500 focus-visible:ring-red-500 placeholder:text-red-400':''}` }/>
                             </div>
                           </FormControl>
                           <FormMessage className="text-xs"/>
                       </FormItem>)}/>
 
+
+                    <FormField control={form.control} name="password_confirmation" render={({ field }) => (
+                      <FormItem className="flex flex-col">
+                          <FormControl>
+                            <div className="relative">
+                              <MdOutlinePassword 
+                              className={`absolute bottom-1/2 left-4 scale-90 translate-y-1/2 ${form.formState.errors.password_confirmation?'text-red-500':''}`}/>
+                              <Input type="password" 
+                              placeholder="Confirm password" 
+                              {...field} 
+                              className={`pl-12 py-5 outline-none ring-gray-200 transition-all ${form.formState.errors.password_confirmation?'ring-1 ring-red-500 text-red-500 focus-visible:ring-red-500 placeholder:text-red-400':''}` }/>
+                            </div>
+                          </FormControl>
+                          <FormMessage className="text-xs"/>
+                      </FormItem>)}/>
 
 
                   <Button type="submit" disabled={!form.formState.isValid || isSubmit } className="bg-emerald-500 hover:bg-emerald-600 shadow-md">
@@ -175,4 +180,4 @@ const UpdateUser = ({open,setOpen,data}: props) => {
   )
 }
 
-export default UpdateUser;
+export default CreateCustomer;
