@@ -61,3 +61,8 @@ export type Cart = {
     product: Product,
     qty: number;  
 }[];
+
+export interface OrderReq {
+    cart: any;
+    customer_id: number;
+}
