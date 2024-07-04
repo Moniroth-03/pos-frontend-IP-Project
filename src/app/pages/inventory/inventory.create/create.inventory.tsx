@@ -32,7 +32,7 @@ import { selectCategory } from "../../order/order.slice";
 import { AppDispatch } from "@/app/store";
 import { FaBoxArchive } from "react-icons/fa6";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { CreateProduct } from "../inventory.service";
+import { CreateProduct, getProduct } from "../inventory.service";
 import { toast } from "sonner";
 import noimg from '@/assets/noimg.svg';
 
@@ -46,6 +46,7 @@ const CreateInventory = () => {
       type_id: '0',
       in_stock: 0,
       unit_price: 0,
+      image: ''
     },
     mode:'all'
   })
@@ -64,6 +65,7 @@ const CreateInventory = () => {
 
     setSubmit(false);
     setPreviewSrc("");
+    dispatch(getProduct());
     form.reset();
   }
 

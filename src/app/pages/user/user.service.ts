@@ -1,6 +1,6 @@
 import axiosPrivate from '@/app/api';
 import env from '@/environments/environment';
-import { UserCreateReq, UserGet, UserMessage, UserUpdateReq } from './user.type';
+import { UserCreateReq, UserCreateRes, UserGet, UserMessage, UserUpdateReq } from './user.type';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getUser = createAsyncThunk<
@@ -46,12 +46,12 @@ export const UpdateUser = createAsyncThunk<
 )
 
 export const CreateUser = createAsyncThunk<
-    UserMessage,UserCreateReq, { rejectValue: string }
+    UserCreateRes,UserCreateReq, { rejectValue: string }
 >(
     "user/create",
     async (body,thunkAPI)=>{
         try {
-            const res = await axiosPrivate.post<UserMessage>(env.api_url+'/user',body);
+            const res = await axiosPrivate.post<UserCreateRes>(env.api_url+'/user/create',body);
             return res.data;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {

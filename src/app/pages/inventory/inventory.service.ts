@@ -1,15 +1,15 @@
 import axiosPrivate from '@/app/api';
 import env from '@/environments/environment';
-import { InventoryCreateReq, InventoryCreateRes, InventoryGet, InventoryMessage, InventoryUpdateReq } from './inventory.type';
+import { InventoryCreateReq, InventoryCreateRes, InventoryGet, InventoryMessage } from './inventory.type';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getProduct = createAsyncThunk<
-    InventoryGet,void, { rejectValue: string }
+    InventoryGet,{ page: number }, { rejectValue: string }
 >(
     "inventory/get",
-    async (_,thunkAPI)=>{
+    async (params,thunkAPI)=>{
         try {
-            const res = await axiosPrivate.get<InventoryGet>(env.api_url+'/product');
+            const res = await axiosPrivate.get<InventoryGet>(env.api_url+'/product?' + `page=${params.page}`);
             return res.data;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
@@ -25,12 +25,13 @@ export const getProduct = createAsyncThunk<
 )
 
 export const UpdateProduct = createAsyncThunk<
-    InventoryMessage,InventoryUpdateReq, { rejectValue: string }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    InventoryMessage,{id: number | undefined, body: any}, { rejectValue: string }
 >(
     "inventory/update",
     async (payload,thunkAPI)=>{
         try {
-            const res = await axiosPrivate.put<InventoryMessage>(env.api_url+'/product/'+ payload.id,payload.body);
+            const res = await axiosPrivate.put<InventoryMessage>(env.api_url+'/product/update?id='+ payload.id,payload.body);
             return res.data;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {

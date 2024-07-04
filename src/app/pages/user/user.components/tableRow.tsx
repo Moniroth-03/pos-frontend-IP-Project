@@ -19,16 +19,19 @@ import {
 import { memo } from "react";
 import { user } from "../user.type";
 import env from "@/environments/environment";
+import { useNavigate } from "react-router-dom";
 
 type props = {
     item: user;
-    setView: any;
     setEdit: any;
     setDel: any;
 }
 
 
-const Tablerow = memo(({ item, setView, setEdit, setDel }: props) => {
+const Tablerow = memo(({ item, setEdit, setDel }: props) => {
+
+    const navigate = useNavigate();
+
     return (
         <TableRow>
             <TableCell className="px-2 py-4 relative">
@@ -50,7 +53,7 @@ const Tablerow = memo(({ item, setView, setEdit, setDel }: props) => {
                     <DropdownMenuContent>
                         <DropdownMenuLabel>Action</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="focus-visible:ring-0" onSelect={()=>setView(true,item)}>                                 
+                        <DropdownMenuItem className="focus-visible:ring-0" onSelect={()=>navigate(''+item.id)}>                                 
                             <FaRegEye className="text-blue-500" size={'1rem'}/>
                             <span className="font-medium pl-2 text-blue-500 text-sm">View</span>
                         </DropdownMenuItem>

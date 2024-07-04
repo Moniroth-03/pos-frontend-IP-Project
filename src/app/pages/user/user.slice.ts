@@ -1,9 +1,10 @@
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { UserGet, UserMessage, initState } from './user.type';
+import { UserCreateRes, UserGet, UserMessage, initState } from './user.type';
 import { RootState } from '@/app/store';
 import { toast } from 'sonner';
 import { CreateUser, DeleteUser, getUser, UpdateUser } from './user.service';
+import { FormatDateTime } from '@/app/utils/dateTimeFormat';
 
 
 const initialState: initState = {
@@ -32,9 +33,11 @@ const userSlice = createSlice({
         })
 
         //Create
-        .addCase(CreateUser.fulfilled, (state, action: PayloadAction<UserMessage>)=>{
+        .addCase(CreateUser.fulfilled, (state, action: PayloadAction<UserCreateRes>)=>{
             state.isLoading = false;
-            toast.success(action.payload.message as string);
+            toast.success(action.payload.message,{
+                description: FormatDateTime(action.payload.data.created_at),  
+            }); 
         })
         .addCase(CreateUser.pending, (state)=>{
             state.isLoading = true;

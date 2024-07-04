@@ -1,4 +1,9 @@
-export const FormatDateTime = (date: Date) => {
+export function FormatDateTime(dat: Date | undefined){
+    if(!dat){
+        return;
+    }
+    const date = new Date(dat.toString());
+
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 

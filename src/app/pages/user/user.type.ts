@@ -4,12 +4,16 @@ export type UserGet = {
 }
 
 export type UserCreateReq = {
-    code: string;
-    type_id: number;
-    unit_price: number;
-    in_stock: number;
-    image: Blob;
-    name: string;
+    email: string;
+    phone: string;
+    password: string;
+    password_confirmation: string;
+    users_type: number | string;
+}
+
+export type UserCreateRes = {
+    message: string;
+    data: user;
 }
 
 export type UserUpdateReq = {
@@ -33,11 +37,14 @@ export type user = {
     users_type: number;
     avatar: string;
     phone: string;
+    is_active?: boolean;
     loyalty_points: number;
     role: {
         id: number;
         name: string;
     }
+    created_at: Date;
+    updated_at: Date;
 }
 
 export type initState = {

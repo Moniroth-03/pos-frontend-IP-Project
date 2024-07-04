@@ -34,6 +34,7 @@ import { Input } from "@/components/ui/input";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { getCategory, getProductByNameOrCode, getProductByType } from "./order.service";
 import { Link, useSearchParams } from "react-router-dom";
+import LoadingSpinner from "@/app/layout/loading/loading";
 
 
 const Order = () => {
@@ -172,7 +173,9 @@ const Order = () => {
                     {/* list item */}
                     <ul className="grid grid-cols-5 gap-4 h-full pr-4 mb-4 overflow-auto">
                         {
-                          !products.isLoading && products.data?.data?.map((item,i)=>(
+                          products.isLoading? 
+                          <div className="col-span-5 flex justify-center"><LoadingSpinner/></div> 
+                          : products.data?.data?.map((item,i)=>(
                             <Card key={i} item={item} category={item.type?.name || 'beer'} active={cart?.findIndex(prod => prod.product.id == item.id)}/>
                           ))
                         }

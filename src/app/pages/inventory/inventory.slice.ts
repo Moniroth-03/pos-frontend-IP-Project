@@ -9,7 +9,7 @@ import { FormatDateTime } from '@/app/utils/dateTimeFormat';
 
 const initialState: initState = {
     isLoading: false,
-    data: []
+    data: null
 }
 
 const inventorySlice = createSlice({
@@ -21,7 +21,7 @@ const inventorySlice = createSlice({
         // Get
         .addCase(getProduct.fulfilled, (state, action: PayloadAction<InventoryGet>)=> {
             state.isLoading = false;
-            state.data = action.payload.data;
+            state.data = action.payload;
         })
         .addCase(getProduct.pending,(state)=>{
             state.isLoading = true;
@@ -35,9 +35,8 @@ const inventorySlice = createSlice({
         //Create
         .addCase(CreateProduct.fulfilled, (state, action: PayloadAction<InventoryCreateRes>)=>{
             state.isLoading = false;
-            const date = new Date(action.payload.data.created_at.toString());
             toast.success(action.payload.message,{
-                description: FormatDateTime(date),  
+                description: FormatDateTime(action.payload.data.created_at),  
             }); 
         })
         .addCase(CreateProduct.pending, (state)=>{

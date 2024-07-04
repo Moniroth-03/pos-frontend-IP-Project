@@ -3,14 +3,19 @@
 export type InventoryGet = {
     message: string | null;
     data: inventory[]
+    
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
 }
 
 export type InventoryCreateReq = {
     code: string;
-    type_id: number;
+    type_id: number | string;
     unit_price: number;
     in_stock: number;
-    image: Blob;
+    image: Blob | string;
     name: string;
 }
 
@@ -35,7 +40,7 @@ export type InventoryMessage = {
 
 export type inventory = {
     id: number;
-    type_id: number;
+    type_id: number | string;
     code: string;
     name: string;
     image: string;
@@ -52,5 +57,5 @@ export type inventory = {
 
 export type initState = {
     isLoading: boolean;
-    data: inventory[];
+    data: InventoryGet | null;
 }

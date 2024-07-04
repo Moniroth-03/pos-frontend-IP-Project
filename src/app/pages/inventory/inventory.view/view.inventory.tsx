@@ -11,6 +11,7 @@ import {
 import { IoCloseSharp } from "react-icons/io5";
 import { inventory } from "../inventory.type";
 import env from "@/environments/environment";
+import { FormatDateTime } from "@/app/utils/dateTimeFormat";
 
 type props = {
   open: boolean;
@@ -60,12 +61,12 @@ const ViewInventory = ({open,setOpen,data}:props) => {
                   <div className="text-start text-slate-900 font-medium flex flex-col gap-4">
                     <span className="text-sm"> Product added date: </span>
                     <span className="text-sm">Product recent update date:</span>
-                    <span className="text-sm">Supplier:</span>
+                    {/* <span className="text-sm">Supplier:</span> */}
                   </div>
                   <div className="text-end flex flex-col gap-4 text-gray-500">
-                    <span className="text-sm">{data?.created_at.toString().split('T',1)}</span>
-                    <span className="text-sm">{data?.updated_at.toString().split('T',1)}</span>
-                    <span className="text-sm">{data?.name}</span>
+                    <span className="text-sm">{FormatDateTime(data?.created_at)}</span>
+                    <span className="text-sm">{FormatDateTime(data?.updated_at)}</span>
+                    {/* <span className="text-sm">{data?.name}</span> */}
                   </div>
                 </div>
             </div>

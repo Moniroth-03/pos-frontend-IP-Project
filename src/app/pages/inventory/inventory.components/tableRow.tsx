@@ -39,9 +39,9 @@ const Tablerow = memo(({ item, setView, setEdit, setDel }: props) => {
             <TableCell className="text-sm text-gray-500 py-4">${item.unit_price}</TableCell>
             <TableCell className="text-sm text-gray-500 py-4">{item.in_stock}</TableCell>
             <TableCell className="text-sm text-gray-500 py-4">{item.type.name}</TableCell>
-            <TableCell className="text-sm text-gray-500 flex py-4">
+            {/* <TableCell className="text-sm text-gray-500 flex py-4">
                 <span className="text-sm w-[27ch] truncate">chharngchhit</span>
-            </TableCell>
+            </TableCell> */}
             <TableCell className="text-sm text-gray-500 py-4">{ item.updated_at.toString().split('T',1) }</TableCell>
             <TableCell className="text-sm flex justify-center py-4 relative">
                 <DropdownMenu>
