@@ -1,6 +1,6 @@
 import axiosPrivate from '@/app/api';
 import env from '@/environments/environment';
-import { InventoryCreateReq, InventoryGet, InventoryMessage, InventoryUpdateReq } from './inventory.type';
+import { InventoryCreateReq, InventoryCreateRes, InventoryGet, InventoryMessage, InventoryUpdateReq } from './inventory.type';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getProduct = createAsyncThunk<
@@ -46,12 +46,12 @@ export const UpdateProduct = createAsyncThunk<
 )
 
 export const CreateProduct = createAsyncThunk<
-    InventoryMessage,InventoryCreateReq, { rejectValue: string }
+    InventoryCreateRes,InventoryCreateReq, { rejectValue: string }
 >(
     "inventory/create",
     async (body,thunkAPI)=>{
         try {
-            const res = await axiosPrivate.post<InventoryMessage>(env.api_url+'/product',body);
+            const res = await axiosPrivate.post<InventoryCreateRes>(env.api_url+'/product',body);
             return res.data;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {

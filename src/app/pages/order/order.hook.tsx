@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useDispatch, useSelector } from "react-redux"
+import {  useSelector } from "react-redux"
 import { Cart } from "./order.type";
 import { selectCart, selectCategory, selectOrderProduct } from "./order.slice";
 

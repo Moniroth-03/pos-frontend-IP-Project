@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store';
 import { toast } from 'sonner';
 import { Category, GetAllProduct, PostCategoryRes, Product, initState } from './order.type';
-import { createCategory, getProductByNameOrCode, getCategory } from './order.service';
+import { createCategory, getProductByNameOrCode, getCategory, getProductByType } from './order.service';
 import { FormatDateTime } from '@/app/utils/dateTimeFormat';
 
 
@@ -92,6 +92,23 @@ const orderSlice = createSlice({
         })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .addCase(getProductByNameOrCode.rejected,(state, action: PayloadAction<any>)=>{
+            state.products.isLoading = false;
+            toast.error(action.payload.message as string); 
+        })
+
+
+
+
+        //getproductByCateogryid
+        .addCase(getProductByType.fulfilled, (state, action: PayloadAction<GetAllProduct>)=> {
+            state.products.isLoading = false;
+            state.products.data = action.payload;
+        })
+        .addCase(getProductByType.pending,(state)=>{
+            state.products.isLoading = true;
+        })
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .addCase(getProductByType.rejected,(state, action: PayloadAction<any>)=>{
             state.products.isLoading = false;
             toast.error(action.payload.message as string); 
         })

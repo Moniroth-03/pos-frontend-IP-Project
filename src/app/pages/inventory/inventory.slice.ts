@@ -1,9 +1,10 @@
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { InventoryGet, InventoryMessage, initState } from './inventory.type';
+import { InventoryCreateRes, InventoryGet, InventoryMessage, initState } from './inventory.type';
 import { RootState } from '@/app/store';
 import { CreateProduct, DeleteProduct, UpdateProduct, getProduct } from './inventory.service';
 import { toast } from 'sonner';
+import { FormatDateTime } from '@/app/utils/dateTimeFormat';
 
 
 const initialState: initState = {
@@ -32,9 +33,12 @@ const inventorySlice = createSlice({
         })
 
         //Create
-        .addCase(CreateProduct.fulfilled, (state, action: PayloadAction<InventoryMessage>)=>{
+        .addCase(CreateProduct.fulfilled, (state, action: PayloadAction<InventoryCreateRes>)=>{
             state.isLoading = false;
-            toast.error(action.payload.message)
+            const date = new Date(action.payload.data.created_at.toString());
+            toast.success(action.payload.message,{
+                description: FormatDateTime(date),  
+            }); 
         })
         .addCase(CreateProduct.pending, (state)=>{
             state.isLoading = true;

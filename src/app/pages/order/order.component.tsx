@@ -19,8 +19,6 @@ import {
   PaginationEllipsis,
   PaginationItem,
   PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
 } from "@/components/ui/pagination"
 import useOrder from "./order.hook";
 // import LoadingSpinner from "@/app/layout/loading/loading";
@@ -28,13 +26,13 @@ import Card from "./subcomponents/card";
 import OrderItem from "./subcomponents/ordereditem";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
+import { CaretSortIcon, CheckIcon, ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/app/store";
 import { Input } from "@/components/ui/input";
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import { getCategory, getProductByNameOrCode } from "./order.service";
+import { getCategory, getProductByNameOrCode, getProductByType } from "./order.service";
 import { Link, useSearchParams } from "react-router-dom";
 
 
@@ -42,7 +40,7 @@ const Order = () => {
     const { getCartTotalItem,getCartTotalItemCost,categories,products,cart } = useOrder();
     const dispatch:AppDispatch = useDispatch();
     const [open,setOpen] = useState(false);//open close combobox of category filter
-    const [value, setValue] = useState("");//active value for the filter 
+    const [value, setValue] = useState('');//active value for the filter 
     const [key,setKey] = useState("");
 
     // unused for now because i have solve the problem where if the page is more than 10 page it will overflow to infinite width 
@@ -65,11 +63,26 @@ const Order = () => {
             dispatch(getCategory());
 
             // using queryParam.get('page') to get the page variable from the url which should be page=1 then dispatch it to the product action/service to call api for data
-            dispatch(getProductByNameOrCode({ key: key , page: queryParameters.get('page') || '' }));
+            if(value.length == 0){
+                dispatch(getProductByNameOrCode({ 
+                    key: key ,
+                    page: queryParameters.get('page') || '',
+                }));
+            }else {
+                handleGetProductbyCat()
+            }
         }
 
         fetchCategory();
-    },[queryParameters, key])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[queryParameters, key, value])
+
+    function handleGetProductbyCat(){
+        dispatch(getProductByType({
+            page: queryParameters.get('page') || '',
+            id: value,
+        }));
+    }
     
     return (
         <main className="w-full grid grid-cols-4">
@@ -88,7 +101,6 @@ const Order = () => {
                                     if(key.length >0){
                                         setValue("");
                                     }
-                                    // dispatch(getProductByNameOrCode({ key: e.target.value, page: products.data?.current_page || '' }));
                                 }} 
                                 className="pl-10" type="text" placeholder="Search product..."/>
                         </div>
@@ -105,7 +117,7 @@ const Order = () => {
                                 className="w-[200px] justify-between"
                                 >
                                 {value
-                                    ? categories.data?.find((i) => i.name == value)?.name
+                                    ? categories.data?.find((i) => i.id.toString() == value)?.name
                                     : "Select category..."}
                                 <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                 </Button>
@@ -116,10 +128,23 @@ const Order = () => {
                                 <CommandList>
                                     <CommandEmpty>No Category found.</CommandEmpty>
                                     <CommandGroup>
+                                        <CommandItem
+                                        value={''}
+                                        onSelect={(currentValue) => {
+                                            setValue(currentValue == value ? "" : currentValue)
+                                            setOpen(false)
+                                        }}
+                                        >
+                                        All Cateogry
+                                        <CheckIcon
+                                            className={cn("ml-auto h-4 w-4",value == '' ? "opacity-100" : "opacity-0"
+                                            )}
+                                        />
+                                        </CommandItem>
                                     {categories.data?.map((cat) => (
                                         <CommandItem
                                         key={cat.id}
-                                        value={cat.name}
+                                        value={cat.id.toString()}
                                         onSelect={(currentValue) => {
                                             setValue(currentValue == value ? "" : currentValue)
                                             setOpen(false)
@@ -127,7 +152,7 @@ const Order = () => {
                                         >
                                         {cat.name}
                                         <CheckIcon
-                                            className={cn("ml-auto h-4 w-4",value == cat.name ? "opacity-100" : "opacity-0"
+                                            className={cn("ml-auto h-4 w-4",value == cat.id.toString() ? "opacity-100" : "opacity-0"
                                             )}
                                         />
                                         </CommandItem>
@@ -158,7 +183,10 @@ const Order = () => {
                             <Pagination>
                                 <PaginationContent>
                                     <PaginationItem>
-                                        <Link to={`?page=${ products?.data?.current_page - 1 > 1 ? products?.data?.current_page - 1 : 1}`}><PaginationPrevious/></Link>
+                                        <Link className="flex gap-1 pr-2.5 items-center font-medium rounded-md hover:bg-gray-100 py-1 px-2" to={`?page=${ products?.data?.current_page - 1 > 1 ? products?.data?.current_page - 1 : 1}`}>
+                                            <ChevronLeftIcon className="h-4 w-4" />
+                                            <span>Previous</span>
+                                        </Link>
                                     </PaginationItem>
 
                                     {/* {
@@ -170,7 +198,10 @@ const Order = () => {
                                     </PaginationItem>
 
                                     <PaginationItem>
-                                        <Link to={`?page=${ products?.data?.current_page + 1 > products.data?.last_page? products.data?.last_page : products?.data?.current_page + 1}`}><PaginationNext/></Link>
+                                        <Link className="flex gap-1 pl-2.5 items-center font-medium rounded-md hover:bg-gray-100 py-1 px-2" to={`?page=${ products?.data?.current_page + 1 > products.data?.last_page? products.data?.last_page : products?.data?.current_page + 1}`}>                                                                        
+                                            <span>Next</span>
+                                            <ChevronRightIcon className="h-4 w-4" />
+                                        </Link>
                                     </PaginationItem>
                                 </PaginationContent>
                             </Pagination>

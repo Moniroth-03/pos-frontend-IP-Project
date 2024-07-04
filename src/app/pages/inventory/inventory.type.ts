@@ -1,3 +1,5 @@
+
+
 export type InventoryGet = {
     message: string | null;
     data: inventory[]
@@ -11,6 +13,10 @@ export type InventoryCreateReq = {
     image: Blob;
     name: string;
 }
+
+export type InventoryCreateRes  = InventoryMessage & {
+    data: inventory;
+} 
 
 export type InventoryUpdateReq = {
     id: number;

@@ -32,6 +32,9 @@ import { selectCategory } from "../../order/order.slice";
 import { AppDispatch } from "@/app/store";
 import { FaBoxArchive } from "react-icons/fa6";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { CreateProduct } from "../inventory.service";
+import { toast } from "sonner";
+import noimg from '@/assets/noimg.svg';
 
 
 const CreateInventory = () => {
@@ -51,11 +54,16 @@ const CreateInventory = () => {
   const [catInput,setCatInput] = useState('');
   const dispatch: AppDispatch = useDispatch();
 
+  //image related state
+  const [previewSrc, setPreviewSrc] = useState<string>('');
+
+
   const handleSubmitForm = (value: z.infer<typeof formSchema>) =>{
     setSubmit(true);
-    console.log(value)
+    dispatch(CreateProduct(value));
 
     setSubmit(false);
+    setPreviewSrc("");
     form.reset();
   }
 
@@ -63,6 +71,27 @@ const CreateInventory = () => {
     dispatch(createCategory({
       name: catInput,
     }));
+    setTimeout(() => {
+      dispatch(getCategory());
+    }, 300)
+  }
+
+  function handleFileChange (e, onChange: any){
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target && typeof event.target.result === 'string') {
+          const base64 = event.target.result;
+          setPreviewSrc(base64); // Set the preview source for displaying the image
+          onChange(base64);
+        }
+      };
+      reader.onerror = (err) => {
+        toast.error('Error reading file')
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   useEffect(()=>{
@@ -91,10 +120,35 @@ const CreateInventory = () => {
                 <SheetDescription></SheetDescription>
             </SheetHeader>
             <div className="flex grow flex-col gap-3 text-slate-900">
-              <img className="flex object-contain max-h-36 mb-4 aspect-square brightness-105" src="https://m.media-amazon.com/images/I/51G22XSlZDL._AC_UF894,1000_QL80_.jpg" alt="no img"/>
+
+              {/* this is the image upload preview and the upload buttom is inside the form  */}
+              <img className="flex object-contain max-h-36 mb-4 aspect-square brightness-105" 
+                  src={previewSrc || noimg} alt="no img"/>
 
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(handleSubmitForm)} className="space-y-4">
+                  <FormField control={form.control} name="image" render={({ field }) => (
+                      <FormItem className="flex justify-center">
+                          <FormControl className="flex justify-center w-fit bg-emerald-500 hover:bg-emerald-700">
+                            <label htmlFor="imageUpload" 
+                            className="cursor-pointer text-white text-xs font-bold py-1 px-3 rounded">
+                              Choose File
+                              <input
+                                className="hidden"
+                                type="file"
+                                id="imageUpload"
+                                accept="image/*"
+                                onChange={(e)=>{
+                                  handleFileChange(e,field.onChange);
+                                }} />
+                            </label>
+                            
+                          </FormControl>
+                          <FormMessage className="text-xs"/>
+                      </FormItem>)}/>
+
+
+
                   <FormField control={form.control} name="name" render={({ field }) => (
                       <FormItem className="flex flex-col">
                           <FormControl>
@@ -107,6 +161,8 @@ const CreateInventory = () => {
                           </FormControl>
                           <FormMessage className="text-xs"/>
                       </FormItem>)}/>
+
+
 
                   <div className="grid grid-cols-2 gap-2">
                     <FormField control={form.control} name="code" render={({ field }) => (
@@ -122,6 +178,8 @@ const CreateInventory = () => {
                             <FormMessage className="text-xs"/>
                         </FormItem>)}/>
 
+
+
                     <FormField control={form.control} name="in_stock" render={({ field }) => (
                       <FormItem className="flex flex-col">
                           <FormControl>
@@ -134,8 +192,9 @@ const CreateInventory = () => {
                           </FormControl>
                           <FormMessage className="text-xs"/>
                       </FormItem>)}/>
-
                   </div>
+
+
 
                   <div className="grid grid-cols-2 gap-2">
                     <FormField control={form.control} name="unit_price" render={({ field }) => (
@@ -150,6 +209,7 @@ const CreateInventory = () => {
                           </FormControl>
                           <FormMessage className="text-xs"/>
                       </FormItem>)}/>
+
 
                     <FormField control={form.control} name="type_id" render={({ field }) => (
                       <FormItem className="flex flex-col">
@@ -192,6 +252,7 @@ const CreateInventory = () => {
                         <FormMessage className="text-xs"/>
                       </FormItem>)}/>
                   </div>
+
 
                   <Button type="submit" disabled={!form.formState.isValid || isSubmit } className="bg-emerald-500 hover:bg-emerald-600 shadow-md">
                     {isSubmit? <LoadingSpinner/>:'Submit'}

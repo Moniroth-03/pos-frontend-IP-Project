@@ -4,6 +4,8 @@ import env from "@/environments/environment"
 import { useDispatch } from "react-redux";
 import { addCart } from "../order.slice";
 import { AppDispatch } from "@/app/store";
+import noimg from '@/assets/noimg.svg';
+import { useState } from "react";
 
 type prop = {
     item: Product;
@@ -13,11 +15,16 @@ type prop = {
 
 const Card = ({item,active,category}:prop) => {
   const dispatch:AppDispatch = useDispatch();
+  const [img,setImg]= useState(env.img_url+item.image)
+
+  function handleErrror(url: string){
+    setImg(url);
+  }
   
   return (
     <div className={`relative lg:max-h-60 pb-12 w-full lg:min-w-36 flex h-full flex-col gap-1 rounded-lg border-2 transition-all ${active != -1 ? 'border-emerald-300 border-[3px]':'border-gray-300'}`}>
         <div className="w-full bg-gray-100 flex place-content-center">
-            <img className="h-24 object-contain" src={env.img_url+item.image} alt="noimg"/>
+            <img className="h-24 object-contain" src={img} alt="no img" onError={()=>handleErrror(noimg)}/>
         </div>
         <div className="px-2 font-medium flex flex-col gap-1 text-center">
             <p className="text-sm">{category || ''}</p>
