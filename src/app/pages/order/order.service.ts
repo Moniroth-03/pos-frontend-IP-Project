@@ -46,6 +46,26 @@ export const createCategory = createAsyncThunk<
     }
 )
 
+export const createOrder = createAsyncThunk<
+    PostCategoryRes,{ name: string, image?: string}, { rejectValue: string }
+>(
+    "category/create",
+    async (body,thunkAPI)=>{
+        try {
+            const res = await axiosPrivate.post<PostCategoryRes>(env.api_url+'/product/type',body);
+            return res.data;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+            if (error.response && error.response.data) {
+                return thunkAPI.rejectWithValue(error.response.data);
+            } else if (error.message) {
+                return thunkAPI.rejectWithValue(error.message);
+            } else {
+                return thunkAPI.rejectWithValue('An unknown error occurred');
+            }
+        }
+    }
+)
 
 export const getProductByType = createAsyncThunk<
    GetAllProduct ,{id: number|string, page: number|string}, { rejectValue: string }

@@ -20,6 +20,7 @@ const ViewCustomer = () => {
       axiosPrivate.get(env.api_url + `/user/view?id=${id}`).then(
         (res)=>{
           setData(res.data.data);
+          setImg(env.img_url + data?.avatar)
         }
       )
     }
