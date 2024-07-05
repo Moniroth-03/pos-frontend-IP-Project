@@ -36,30 +36,28 @@ const DashboardComponent = () => {
     fetchDataThismonth();
   }, []); // Dependency array is empty to run only once after the component mounts
 
-  const [datalastmonth, setLastmonth] = useState({});
-  useEffect(() => {
-    const fetchDatalastmonth = async () => {
-      try {
-        const { data: statistic } = await axiosPrivate.get(
-          "dasboard/lastMonth"
-        ); // Correct endpoint
-        setDatathismonth(statistic);
-        console.log(datalastmonth); // Log the fetched data
-      } catch (err) {
-        console.error(err); // Use console.error for errors
-      }
-    };
+  // const [datalastmonth, setDatalastmonth] = useState({});
+  // useEffect(() => {
+  //   const fetchDatalastmonth = async () => {
+  //     try {
+  //       const { data: statistic } = await axiosPrivate.get(
+  //         "dasboard/lastMonth"
+  //       ); // Correct endpoint
+  //       setDatathismonth(statistic);
+  //       console.log(datalastmonth); // Log the fetched data
+  //     } catch (err) {
+  //       console.error(err); // Use console.error for errors
+  //     }
+  //   };
 
-    fetchDatalastmonth();
-  }, []); // Dependency array is empty to run only once after the component mounts
+  //   fetchDatalastmonth();
+  // }, []); // Dependency array is empty to run only once after the component mounts
 
   const [datatoday, setDataToday] = useState({});
   useEffect(() => {
     const fetchDataToday = async () => {
       try {
-        const { data: statistic } = await axiosPrivate.get(
-          "dasboard/lastMonth"
-        ); // Correct endpoint
+        const { data: statistic } = await axiosPrivate.get("dasboard/today"); // Correct endpoint
         setDataToday(statistic);
         console.log(datatoday); // Log the fetched data
       } catch (err) {
@@ -91,12 +89,12 @@ const DashboardComponent = () => {
         customer={datathismonth?.CustomersCount}
         order={datathismonth?.Sale}
       />
-      <ListDashboardComponent
+      {/* <ListDashboardComponent
         title="Sales Last Month"
-        sale={datathismonth?.total_sale}
-        customer={datathismonth?.CustomersCount}
-        order={datathismonth?.Sale}
-      />
+        sale={datalastmonth?.total_sale}
+        customer={datalastmonth?.CustomersCount}
+        order={datalastmonth?.Sale}
+      /> */}
       <div className="lg:col-span-3">
         <ListDashboardComponent
           title="All Sales"
