@@ -10,13 +10,14 @@ import NotFound from "./pages/notfound/notfound.component";
 import UserComponent from "./pages/user/user.component";
 import ViewUser from "./pages/user/user.view/view.user";
 import ViewCustomer from "./pages/customer/cust.view/view.cust";
+import DashboardComponent from "./pages/dashboard/dashboard.component";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Authentication />}>
         <Route path="/" element={<LayoutComponent />}>
-          <Route index path="" element={<div></div>} />
+          <Route index path="" element={<DashboardComponent />} />
           <Route path="customer" element={<CustomerComponent />} />
           <Route path="customer/:id" element={<ViewCustomer />} />
           <Route path="user" element={<UserComponent />} />

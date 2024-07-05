@@ -11,8 +11,8 @@ const LayoutComponent = () => {
       <div className="flex">
         <NavigationComponent></NavigationComponent>
         <div className="flex w-full px-6 py-4">
-          {/* <Outlet></Outlet> */}
-          <DashboardComponent />
+          <Outlet></Outlet>
+          {/* <DashboardComponent /> */}
         </div>
       </div>
 
