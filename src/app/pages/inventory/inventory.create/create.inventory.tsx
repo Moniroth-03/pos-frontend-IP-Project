@@ -65,7 +65,7 @@ const CreateInventory = () => {
 
     setSubmit(false);
     setPreviewSrc("");
-    dispatch(getProduct());
+    dispatch(getProduct({page: 0}));
     form.reset();
   }
 

@@ -3,7 +3,7 @@ import authSlice from './auth/auth.slice.js'
 import inventorySlice from './pages/inventory/inventory.slice.ts'
 import orderSlice from './pages/order/order.slice.ts'
 import userSlice from './pages/user/user.slice.ts'
-
+import saleSlice from './pages/order_detail/order_detail.slice.ts'
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +11,7 @@ export const store = configureStore({
     order: orderSlice,
     inventory: inventorySlice,
     user: userSlice,
+    sale: saleSlice,
   },
   devTools: true
 })

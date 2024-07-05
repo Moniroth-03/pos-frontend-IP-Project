@@ -53,7 +53,7 @@ export const UpdateUser = createAsyncThunk<
     "user/update",
     async (payload,thunkAPI)=>{
         try {
-            const res = await axiosPrivate.put<UserMessage>(env.api_url+'/user/'+ payload.id,payload.body);
+            const res = await axiosPrivate.put<UserMessage>(env.api_url+'/user/update?id='+ payload.id,payload.body);
             return res.data;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {

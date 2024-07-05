@@ -14,8 +14,8 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form"
-import { MdEmail, MdGroups, MdOutlinePassword } from "react-icons/md";
-import { FaPhone, FaTag, FaUser } from "react-icons/fa";
+import { MdEmail, MdOutlinePassword } from "react-icons/md";
+import { FaPhone, FaUser } from "react-icons/fa";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
@@ -30,6 +30,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/app/store";
 import { CreateUser as CreateUsers, getUser } from "../user.service";
 import userimg from '@/assets/user.svg';
+import { toast } from "sonner";
 
 
 const CreateUser = () => {
@@ -41,20 +42,46 @@ const CreateUser = () => {
       phone: '',
       password: '',
       password_confirmation: '',
-      users_type: 0,
+      users_type: 2,
+      avatar: '',
     },
     mode:'all'
   })
   const [isSubmit, setSubmit] = useState(false);
   const dispatch: AppDispatch = useDispatch();
+  
+  //image related state
+  const [previewSrc, setPreviewSrc] = useState<string>('');
 
   const handleSubmitForm = (value: z.infer<typeof formSchema>) =>{
+    // temporary solution for unable to get usertype
+    form.setValue('users_type',2);
+
     setSubmit(true);
     dispatch(CreateUsers(value));
 
     setSubmit(false);
+    setPreviewSrc("");
     dispatch(getUser());
     form.reset();
+  }
+
+function handleFileChange (e, onChange: any){
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target && typeof event.target.result === 'string') {
+          const base64 = event.target.result;
+          setPreviewSrc(base64); // Set the preview source for displaying the image
+          onChange(base64);
+        }
+      };
+      reader.onerror = (err) => {
+        toast.error('Error reading file')
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
   return (
@@ -77,11 +104,31 @@ const CreateUser = () => {
 
               {/* this is the image upload preview and the upload buttom is inside the form  */}
               <img className="flex object-contain max-h-36 mb-4 aspect-square brightness-105" 
-                  src={userimg}/>
+                  src={previewSrc || userimg} alt="no img"/>
 
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(handleSubmitForm)} className="space-y-4">
         
+                  <FormField control={form.control} name="avatar" render={({ field }) => (
+                      <FormItem className="flex justify-center">
+                          <FormControl className="flex justify-center w-fit bg-emerald-500 hover:bg-emerald-700">
+                            <label htmlFor="imageUpload" 
+                            className="cursor-pointer text-white text-xs font-bold py-1 px-3 rounded">
+                              Choose File
+                              <input
+                                className="hidden"
+                                type="file"
+                                id="imageUpload"
+                                accept="image/*"
+                                onChange={(e)=>{
+                                  handleFileChange(e,field.onChange);
+                                }} />
+                            </label>
+                            
+                          </FormControl>
+                          <FormMessage className="text-xs"/>
+                      </FormItem>)}/>
+
                   <FormField control={form.control} name="name" render={({ field }) => (
                       <FormItem className="flex flex-col">
                           <FormControl>
@@ -128,21 +175,6 @@ const CreateUser = () => {
                           <FormMessage className="text-xs"/>
                       </FormItem>)}/>
 
-
-                    <FormField control={form.control} name="users_type" render={({ field }) => (
-                      <FormItem className="flex flex-col">
-                          <FormControl>
-                            <div className="relative">
-                              <MdGroups 
-                              className={`absolute bottom-1/2 left-4 scale-90 translate-y-1/2 ${form.formState.errors.phone?'text-red-500':''}`}/>
-                              <Input type="number" 
-                              placeholder="user type" 
-                              {...field} 
-                              className={`pl-12 py-5 outline-none ring-gray-200 transition-all ${form.formState.errors.phone?'ring-1 ring-red-500 text-red-500 focus-visible:ring-red-500 placeholder:text-red-400':''}` }/>
-                            </div>
-                          </FormControl>
-                          <FormMessage className="text-xs"/>
-                      </FormItem>)}/>
 
                     <FormField control={form.control} name="password" render={({ field }) => (
                       <FormItem className="flex flex-col">

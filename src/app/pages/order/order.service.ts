@@ -1,7 +1,8 @@
 import axiosPrivate from '@/app/api';
 import env from '@/environments/environment';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Category, GetAllProduct, PostCategoryRes} from './order.type';
+import { Category, GetAllProduct, OrderReq, PostCategoryRes} from './order.type';
+import { Sale } from '../order_detail/order_detail.type';
 
 export const getCategory = createAsyncThunk<
     { data: Category[] },void, { rejectValue: string }
@@ -47,12 +48,12 @@ export const createCategory = createAsyncThunk<
 )
 
 export const createOrder = createAsyncThunk<
-    PostCategoryRes,{ name: string, image?: string}, { rejectValue: string }
+    {order: Sale, message: string},OrderReq, { rejectValue: string }
 >(
-    "category/create",
+    "sale/create",
     async (body,thunkAPI)=>{
         try {
-            const res = await axiosPrivate.post<PostCategoryRes>(env.api_url+'/product/type',body);
+            const res = await axiosPrivate.post<{order: Sale,message: string}>(env.api_url+'/pos/order',body);
             return res.data;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {

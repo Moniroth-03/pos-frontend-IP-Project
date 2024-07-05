@@ -14,6 +14,8 @@ const formSchema = z.object({
     .refine(val => /^[0-9]+$/.test(val), { message: 'phone must contain only numbers' }),
   
   is_active: z.number(),
+
+  avatar: z.string(),
   
   users_type: z.preprocess(val => Number(val), z.number().nonnegative({ message: 'users_type must be a non-negative number' })),
 });

@@ -10,6 +10,8 @@ import NotFound from "./pages/notfound/notfound.component";
 import UserComponent from "./pages/user/user.component";
 import ViewUser from "./pages/user/user.view/view.user";
 import ViewCustomer from "./pages/customer/cust.view/view.cust";
+import SaleComponent from "./pages/order_detail/order_detail.component";
+import ViewOrderDetail from "./pages/order_detail/view.order_detail";
 
 function App() {
   return (
@@ -23,7 +25,8 @@ function App() {
           <Route path="user" element={<UserComponent/>} />
           <Route path="user/:id" element={<ViewUser/>} />
           <Route path="orders" element={<Order/>} />
-          <Route path="ordersdetail" element={<div>Orders Detail</div>} />
+          <Route path="ordersdetail" element={<SaleComponent/>} />
+          <Route path="ordersdetail/:id" element={<ViewOrderDetail/>} />
           <Route path="inventory" element={<InventoryComponent />} />
 
         </Route>

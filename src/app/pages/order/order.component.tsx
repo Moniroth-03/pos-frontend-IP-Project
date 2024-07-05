@@ -32,7 +32,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/app/store";
 import { Input } from "@/components/ui/input";
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import { getCategory, getProductByNameOrCode, getProductByType } from "./order.service";
+import { createOrder, getCategory, getProductByNameOrCode, getProductByType } from "./order.service";
 import { Link, useSearchParams } from "react-router-dom";
 import LoadingSpinner from "@/app/layout/loading/loading";
 
@@ -83,6 +83,22 @@ const Order = () => {
             page: queryParameters.get('page') || '',
             id: value,
         }));
+    }
+
+    function handleOrder(){
+        const cartarray = cart;
+
+        if(cartarray){
+            const newArr = cartarray.reduce((acc, element) => {
+                const id = element.product.id.toString();
+                acc[id] = element.qty;
+                return acc;
+            }, {});
+            const jsonString = JSON.stringify(newArr);
+            // console.log(jsonString)
+            dispatch(createOrder({ cart: jsonString, customer_id: 3 }));
+
+        }
     }
     
     return (
@@ -252,7 +268,7 @@ const Order = () => {
                         <p>Tax</p>
                         <p className="font-medium">${ ((( getCartTotalItemCost(cart) || 0 ) + ( getCartTotalItemCost(cart) || 0 ) * 0.01) * 0.5).toFixed(2) } </p>
                     </div>
-                    <div className="mx-4 mt-4">
+                    <div className="mx-4 mt-4" onClick={()=>handleOrder()}>
                         <Button variant="default" className="w-full bg-emerald-600 hover:bg-emerald-700">Order</Button>
                     </div>
                 </div>

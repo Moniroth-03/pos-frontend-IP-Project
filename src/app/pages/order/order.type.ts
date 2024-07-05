@@ -63,6 +63,8 @@ export type Cart = {
 }[];
 
 export interface OrderReq {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     cart: any;
     customer_id: number;
 }
+

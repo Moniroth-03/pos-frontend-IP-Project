@@ -17,8 +17,12 @@ const formSchema = z.object({
     .min(6, { message: "password must be at least 6 characters long" }),
   
   password_confirmation: z.string(),
-  
+
   users_type: z.preprocess(val => Number(val), z.number().nonnegative({ message: 'users_type must be a non-negative number' })),
+  
+  avatar: z.string(),
+  
+  
 })
 .superRefine((data, ctx) => {
   if (data.password !== data.password_confirmation) {

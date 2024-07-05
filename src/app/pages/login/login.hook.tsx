@@ -8,8 +8,8 @@ const useLogin = () => {
     const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
 
-    const [user, setUser] = useState('chhit085@gmail.com')
-    const [pwd, setPwd] = useState('123456')
+    const [user, setUser] = useState('')
+    const [pwd, setPwd] = useState('')
     const [errMsg, setErrMsg] = useState('')
     
     useEffect(()=>{

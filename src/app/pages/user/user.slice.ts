@@ -66,7 +66,7 @@ const userSlice = createSlice({
         //Update
         .addCase(UpdateUser.fulfilled, (state, action: PayloadAction<UserMessage>)=>{
             state.isLoading = false;
-            toast.error(action.payload.message as string)
+            toast.success(action.payload.message as string)
         })
         .addCase(UpdateUser.pending, (state)=>{
             state.isLoading = true;

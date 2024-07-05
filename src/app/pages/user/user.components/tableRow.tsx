@@ -43,7 +43,7 @@ const Tablerow = memo(({ item, setEdit, setDel }: props) => {
                 <img src={img} onError={()=>handleErrror(userimg)} className="w-12 aspect-square object-contain absolute top-1/2 -translate-y-1/2 rounded-lg"/>
                 <div className="ml-14 flex flex-col">
                     <span className="text-sm w-[30ch] truncate font-medium">{item.name}</span>
-                    <span className="text-sm text-gray-500">{item.role.name}</span>
+                    <span className="text-sm text-gray-500">{item?.role?.name}</span>
                 </div>
             </TableCell>
             <TableCell className="text-sm text-gray-500 py-4">{item.email}</TableCell>

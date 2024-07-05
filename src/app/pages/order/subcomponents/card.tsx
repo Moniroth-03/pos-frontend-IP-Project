@@ -30,7 +30,10 @@ const Card = ({item,active,category}:prop) => {
             <p className="text-sm">{category || ''}</p>
             <h3 className="w-full truncate text-sm text-balance">{item?.name}</h3>
             <div className="flex justify-between w-full pr-3 items-center absolute bottom-1">
-              <span className="text-sm font-semibold">${item.unit_price}</span>
+              <span className="text-sm font-semibold relative">
+                <span className="absolute bottom-full text-[0.75rem] font-normal text-gray-500 whitespace-nowrap">{item?.in_stock} items</span>
+                ${item.unit_price}
+                </span>
               <Button onClick={()=>dispatch(addCart(item))} variant={active != -1 ? "outline":"default"} className={`scale-90 px-3 ${active != -1 ? 'bg-transparent border-2 border-emerald-500':'bg-emerald-500'} hover:bg-emerald-600`}>+ Add</Button>
             </div>
 
