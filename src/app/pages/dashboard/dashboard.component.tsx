@@ -75,38 +75,38 @@ const DashboardComponent = () => {
       className="w-full p-4 overflow-y-auto"
       style={{ maxHeight: "calc(100vh - 100px)" }}
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div className="lg:col-span-3">
-          <ListDashboardComponent
-            title="Sales Today"
-            sale={datatoday?.total_sale}
-            customer={datatoday?.CustomersCount}
-            order={datatoday?.Sale} // Provide a fallback value
-          />
-          {data?.sale}
-        </div>
+      <div className="grid grid-cols-1 lg:grid-cols-1 gap-4">
+        {/* <div className="lg:col-span-3"> */}
         <ListDashboardComponent
-          title="Sales This Month"
-          sale={datathismonth?.total_sale}
-          customer={datathismonth?.CustomersCount}
-          order={datathismonth?.Sale}
+          title="Sales Today"
+          sale={datatoday?.total_sale}
+          customer={datatoday?.CustomersCount}
+          order={datatoday?.Sale} // Provide a fallback value
         />
+        {data?.sale}
+      </div>
+      <ListDashboardComponent
+        title="Sales This Month"
+        sale={datathismonth?.total_sale}
+        customer={datathismonth?.CustomersCount}
+        order={datathismonth?.Sale}
+      />
+      <ListDashboardComponent
+        title="Sales Last Month"
+        sale={datathismonth?.total_sale}
+        customer={datathismonth?.CustomersCount}
+        order={datathismonth?.Sale}
+      />
+      <div className="lg:col-span-3">
         <ListDashboardComponent
-          title="Sales Last Month"
-          sale={datathismonth?.total_sale}
-          customer={datathismonth?.CustomersCount}
-          order={datathismonth?.Sale}
+          title="All Sales"
+          sale={data?.total_sale}
+          customer={data?.CustomersCount}
+          order={data?.Sale}
         />
-        <div className="lg:col-span-3">
-          <ListDashboardComponent
-            title="All Sales"
-            sale={data?.total_sale}
-            customer={data?.CustomersCount}
-            order={data?.Sale}
-          />
-        </div>
       </div>
     </div>
+    // </div>
   );
 };
 
