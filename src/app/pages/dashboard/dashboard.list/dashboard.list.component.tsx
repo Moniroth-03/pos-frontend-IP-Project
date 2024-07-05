@@ -23,7 +23,7 @@ const ListDashboardComponent: React.FC<ListDashboardComponentProps> = ({
         <h2 className="text-lg sm:text-xl font-bold">{title}</h2>
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6">
-        <div className="flex items-center p-4 overflow-scroll bg-gray-100 rounded-lg shadow-md">
+        <div className="flex items-center p-4 bg-gray-100 rounded-lg shadow-md">
           {" "}
           {/* Keep shadow-md for inner cards */}
           <div className="p-3 mr-4 bg-teal-100 text-teal-600 rounded-lg">
@@ -38,7 +38,7 @@ const ListDashboardComponent: React.FC<ListDashboardComponentProps> = ({
           <div className="p-3 mr-4 bg-yellow-100 text-yellow-600 rounded-lg">
             <FaUsers size={24} />
           </div>
-          <div className=" overflow-x-scroll overflow-y-hidden">
+          <div className="">
             <div className="text-sm text-gray-600">Customers</div>
             <div className="text-xl sm:text-2xl font-bold">{customer}</div>
           </div>
